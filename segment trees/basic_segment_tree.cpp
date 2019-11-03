@@ -39,15 +39,11 @@ ll get(int l, int r) {
 	return res;
 }
 
-void lol() {
-    cout << "lol" << endl;
-}
-
 int main() {
     ios_base::sync_with_stdio(0); cin.tie(0);
 #ifdef LOCAL
     freopen("input.txt", "r", stdin);
 #endif
-
+	
     return 0;
 }
