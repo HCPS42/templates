@@ -17,7 +17,6 @@ bool operator<(const NumberAndIndex& first, const NumberAndIndex& second) {
     return first.number < second.number;
 }
 
-
 class MinSegmentTree {
 public:
     explicit MinSegmentTree(size_t size) {
