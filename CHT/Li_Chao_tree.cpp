@@ -42,8 +42,8 @@ void add_line(point nw, int v = 1, int l = 0, int r = N) {
 ll get_min(int x, int v = 1, int l = 0, int r = N) {
 	int m = (l + r) / 2;
 	if (r - l == 1) return f(line[v], x);
-	else if (x < m) return min(f(line[v], x), get(x, v+v, l, m));
-	else return min(f(line[v], x), get(x, v+v+1, m, r));
+	else if (x < m) return min(f(line[v], x), get_min(x, v+v, l, m));
+	else return min(f(line[v], x), get_min(x, v+v+1, m, r));
 }
 
 int main() {
