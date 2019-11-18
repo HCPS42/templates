@@ -15,7 +15,7 @@ struct CHT {
 		pointer = 0;
 		K.clear();
 		B.clear();
-	}	
+	}
 	bool bad(int l1, int l2, int l3) {
 		return (B[l3]-B[l1])*(K[l1]-K[l2])<(B[l2]-B[l1])*(K[l1]-K[l3]);
 	}
