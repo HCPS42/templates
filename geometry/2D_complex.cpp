@@ -10,19 +10,19 @@ typedef long long ll;
 
 const double pi = acos(-1);
 typedef complex<double> point;
-#define x real
-#define y imag
+#define x real()
+#define y imag()
 
 double dot(point a, point b) {
-	return (conj(a) * b).x();
+	return (conj(a) * b).x;
 }
 
 double cross(point a, point b) {
-	return (conj(a) * b).y();
+	return (conj(a) * b).y;
 }
 
 double dist(point a, point b) {
-	return sqrt((a.x() - b.x()) * (a.x() - b.x()) + (a.y() - b.y()) * (a.y() - b.y()));
+	return sqrt(dot(a - b, a - b));
 }
 
 int main() {
@@ -30,6 +30,6 @@ int main() {
 #ifdef LOCAL
     freopen("input.txt", "r", stdin);
 #endif
-	
+
     return 0;
 }
