@@ -9,7 +9,6 @@ typedef long long ll;
 #define se second
 
 typedef vector<double> vec;
-
 const double eps = 1e-8;
 
 // Ax <= b, maximize c^Tx
