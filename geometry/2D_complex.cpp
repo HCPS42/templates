@@ -10,15 +10,15 @@ typedef long long ll;
 
 const double pi = acos(-1);
 typedef complex<double> point;
-#define x real()
-#define y imag()
+#define x() real()
+#define y() imag()
 
 double dot(point a, point b) {
-	return (conj(a) * b).x;
+	return (conj(a) * b).x();
 }
 
 double cross(point a, point b) {
-	return (conj(a) * b).y;
+	return (conj(a) * b).y();
 }
 
 double dist(point a, point b) {
