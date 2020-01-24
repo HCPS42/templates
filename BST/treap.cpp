@@ -66,8 +66,10 @@ int main() {
     freopen("input.txt", "r", stdin);
 #endif
 	node *root = NULL;
+	int n;
+	cin >> n;
 	for (int i=1; i<=n; i++) {
-		root = merge(root, new node(i));
+		merge(root, root, new node(i));
 	}
 	return 0;
 }
