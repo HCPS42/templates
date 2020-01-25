@@ -33,7 +33,7 @@ struct CHT {
 			vecs.ppp();
 		}
 		if (!hull.empty()) {
-			vecs.pb(complex<ll>(1i) * (nw - hull.back()));
+			vecs.pb(complex<ll>({0, 1}) * (nw - hull.back()));
 		}
 		hull.pb(nw);
 	}
