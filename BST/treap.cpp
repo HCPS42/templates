@@ -8,56 +8,56 @@ typedef long long ll;
 #define se second
 #define pii pair<int,int>
 
-struct node {
-	node *lef, *rig;
+struct Node {
+	Node *l, *r;
 	int w, sz, val;
-	node(int x) {
-		lef = rig = NULL;
+	Node(int x) {
+		l = r = NULL;
 		w = rand();
 		sz = 1;
 		val = x;
 	}
 };
 
-int size(node *v) {
-	if (v == NULL) return 0;
+int sz(Node* v) {
+	if (!v) return 0;
 	return v->sz;
 }
 
-void split(node *v, node *&lef, node *&rig, int k) {
-	if (v == NULL) {
-		lef = rig = NULL;
+void split(Node *v, Node *&l, Node *&r, int k) {
+	if (!v) {
+		l = r = NULL;
 		return;
 	}
-	if (size(v->lef) < k) {
-		split(v->rig, v->rig, rig, k - size(v->lef) - 1);
-		lef = v;
+	if (sz(v->l) < k) {
+		split(v->r, v->r, r, k - sz(v->l) - 1);
+		l = v;
 	}
 	else {
-		split(v->lef, lef, v->lef, k);
-		rig = v;
+		split(v->l, l, v->l, k);
+		r = v;
 	}
-	v->sz = size(v->lef) + size(v->rig) + 1;
+	v->sz = sz(v->l) + sz(v->r) + 1;
 }
 
-void merge(node *&v, node *lef, node *rig) {
-	if (!lef) {
-		v = rig;
+void merge(Node *&v, Node *l, Node *r) {
+	if (!l) {
+		v = r;
 		return;
 	}
-	if (!rig) {
-		v = lef;
+	if (!r) {
+		v = l;
 		return;
 	}
-	if (lef->w < rig->w) {
-		merge(lef->rig, lef->rig, rig);
-		v = lef;
+	if (l->w < r->w) {
+		merge(l->r, l->r, r);
+		v = l;
 	}
 	else {
-		merge(rig->lef, lef, rig->lef);
-		v = rig;
+		merge(r->l, l, r->l);
+		v = r;
 	}
-	v->sz = size(v->lef) + size(v->rig) + 1;
+	v->sz = sz(v->l) + sz(v->r) + 1;
 }
 
 int main() {
@@ -65,11 +65,11 @@ int main() {
 #ifdef LOCAL
     freopen("input.txt", "r", stdin);
 #endif
-	node *root = NULL;
+	Node *root = NULL;
 	int n;
 	cin >> n;
 	for (int i=1; i<=n; i++) {
-		merge(root, root, new node(i));
+		merge(root, root, new Node(i));
 	}
 	return 0;
 }
