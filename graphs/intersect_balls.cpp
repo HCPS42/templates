@@ -9,6 +9,9 @@ typedef long long ll;
 #define se second
 #define prev previous
 
+// k balls are given.
+// How many vertices lie in at least (k - 1) of them?
+
 const int N = 2e5 + 5;
 const int inf = 1e9;
 
