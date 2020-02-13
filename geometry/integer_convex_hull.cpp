@@ -9,7 +9,6 @@ typedef long long ll;
 #define se second
 
 typedef complex<ll> point;
-
 #define x() real()
 #define y() imag()
 
@@ -28,43 +27,21 @@ bool cmp(point& a, point& b) {
 }
 
 bool cmp_angle(point& a, point& b) {
-	if (a.x() == 0 && b.x() == 0) {
-		return a.y() < b.y();
-	}
-	if (a.x() == 0) {
-		return b.x() < 0;
-	}
-	if (b.x() == 0) {
-		return 0 < a.x();
-	}
-	if (a.y() * b.x() == b.y() * a.x()) {
-		return cmp(a, b);
-	}
-	if (a.x() > 0 && b.x() > 0) {
-		return a.y() * b.x() < b.y() * a.x();
-	}
-	if (a.x() > 0) {
-		return 1;
-	}
-	if (b.x() > 0) {
-		return 0;
-	}
-	return a.y() * b.x() < b.y() * a.x();
+	ll s = cross(a, b);
+	if (s > 0) return 1;
+	if (s < 0) return 0;
+	return cmp(a, b);
 }
 
 vector<point> convex_hull(vector<point> a) {
+	vector<point> hull;
 	sort(a.begin(), a.end(), cmp);
 	point shift = a[0];
 	for (point& A : a) {
 		A -= shift;
 	}
-	vector<point> b;
-	for (int i=1; i<a.size(); i++) {
-		b.pb(a[i]);
-	}
-	sort(b.begin(), b.end(), cmp_angle);
-	vector<point> hull;
-	for (point A : b) {
+	sort(a.begin(), a.end(), cmp_angle);
+	for (point A : a) {
 		while (hull.size() >= 2) {
 			point B = hull.back();
 			point C = hull[hull.size()-2];
@@ -75,11 +52,8 @@ vector<point> convex_hull(vector<point> a) {
 		}
 		hull.pb(A);
 	}
-	reverse(hull.begin(), hull.end());
-	hull.pb(0);
-	reverse(hull.begin(), hull.end());
 	for (point& A : hull) {
-		A += shift;
+        A += shift;
 	}
 	return hull;
 }
