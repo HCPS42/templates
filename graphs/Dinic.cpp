@@ -76,11 +76,11 @@ ll dfs(int v, ll flow, int sink) {
 ll max_flow(int src, int sink) {
 	ll flow = 0;
 	while (1) {
-        if (!bfs(src, sink)) break;
-        for (int i=0; i<N; i++) ptr[i] = 0;
-        while (ll pushed = dfs(src, inf, sink)) {
-            flow += pushed;
-        }
+		if (!bfs(src, sink)) break;
+		for (int i=0; i<N; i++) ptr[i] = 0;
+		while (ll pushed = dfs(src, inf, sink)) {
+		    flow += pushed;
+		}
 	}
 	return flow;
 }
