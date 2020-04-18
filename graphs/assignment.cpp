@@ -10,6 +10,7 @@ typedef long long ll;
 
 const ll inf = 1e18;
 
+// min cost matching
 pair<ll, vector<int>> assignment(vector<vector<ll>> a) {
 	int n = a.size();
 	int m = a[0].size();
