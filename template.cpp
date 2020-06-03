@@ -7,14 +7,19 @@ typedef long long ll;
 #define pii pair<int,int>
 #define fi first
 #define se second
+#define stie std::tie
+#define F first
+#define S second
 
 template<class T> void mini(T& a, T b) { a = min(a, b); }
 template<class T> void maxi(T& a, T b) { a = max(a, b); }
 template<class T1, class T2>
-ostream& operator<<(ostream &out, pair<T1, T2> a) { return out << "(" << a.fi << ", " << a.se << ")"; }
-template<class T> ostream& operator<<(ostream& out, vector<T> a) { out<<"("; for (auto& v : a) out<<v<<", "; return out<<")"; }
-template<class T> ostream& operator<<(ostream& out, set<T> a) { out<<"("; for (auto& v : a) out<<v<<", "; return out<<")"; }
-template<class L, class R> ostream& operator<<(ostream& out, map<L, R> a) { out<<"("; for (auto& v : a) out<<v<<", "; return out<<")"; }
+ostream& operator<<(ostream &out, pair<T1, T2> a) { return out << a.first << " " << a.second; }
+template<class T> ostream& operator<<(ostream& out, vector<T> a) { for (auto& i : a) out << i << "\n"; return out; }
+template<class T> ostream& operator<<(ostream& out, set<T> a) { for (auto& i : a) out << i << " "; return out; }
+template<class T1, class T2> ostream& operator<<(ostream& out, map<T1, T2> a) { for (auto& i : a) out << i << " "; return out; }
+template<class T> void out(T a) { cout << a << endl; }
+void out() { cout << "OK" << endl; }
 
 void Solve() {
 	
