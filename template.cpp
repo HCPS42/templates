@@ -14,11 +14,14 @@ typedef long double ld;
 
 template<class T> void mini(T& a, T b) { a = min(a, b); }
 template<class T> void maxi(T& a, T b) { a = max(a, b); }
-template<class T1, class T2>
-ostream& operator<<(ostream &out, pair<T1, T2> a) { return out << a.first << " " << a.second; }
+template<class T1, class T2> ostream& operator<<(ostream &out, pair<T1, T2> a) { return out << a.first << " " << a.second; }
 template<class T> ostream& operator<<(ostream& out, vector<T> a) { for (auto& i : a) out << i << " "; return out; }
 template<class T> ostream& operator<<(ostream& out, set<T> a) { for (auto& i : a) out << i << " "; return out; }
+template<class T> ostream& operator<<(ostream& out, multiset<T> a) { for (auto& i : a) out << i << " "; return out; }
 template<class T1, class T2> ostream& operator<<(ostream& out, map<T1, T2> a) { for (auto& i : a) out << i << " "; return out; }
+template<class T1, class T2> ostream& operator<<(ostream& out, unordered_map<T1, T2> a) { for (auto& i : a) out << i << " "; return out; }
+template<class T> ostream& operator<<(ostream& out, queue<T> a) { while (!a.empty()) { cout << a.front() << " "; a.pop(); } return out; }
+template<class T> ostream& operator<<(ostream& out, deque<T> a) { while (!a.empty()) { cout << a.front() << " "; a.pop_front(); } return out; }
 template<class T> void out(T a) { cout << a << endl; }
 void out() { cout << "OK" << endl; }
 
