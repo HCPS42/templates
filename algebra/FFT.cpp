@@ -1,16 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
-typedef long long ll;
-
-#define pb push_back
-#define ppp pop_back
-#define fi first
-#define se second
-#define pii pair<int,int>
 
 typedef complex<double> C;
 typedef vector<C> poly_C;
-typedef vector<ll> poly;
+typedef vector<int64_t> poly;
 
 const int K = 1 << 20; // check
 const double pi = acos(-1);
@@ -43,12 +36,14 @@ void fft(T *in, C *out, int n, int k = 1) {
 
 void align(poly &a, poly &b) {
 	int n = a.size() + b.size() - 1;
-	while (a.size() < n) a.pb(0);
-	while (b.size() < n) b.pb(0);
+	while (a.size() < n) a.push_back(0);
+	while (b.size() < n) b.push_back(0);
 }
 
 poly_C eval(poly a) {
-	while (__builtin_popcount(a.size()) != 1) a.pb(0);
+	while (__builtin_popcount(a.size()) != 1) {
+		a.push_back(0);
+	}
 	poly_C res(a.size());
 	fft(a.data(), res.data(), a.size());
 	return res;
@@ -75,11 +70,6 @@ poly mult(poly a, poly b) {
 }
 
 int main() {
-    ios_base::sync_with_stdio(0); cin.tie(0);
-#ifdef LOCAL
-    freopen("input.txt", "r", stdin);
-#endif
 	init();
-	
 	return 0;
 }
