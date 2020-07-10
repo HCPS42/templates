@@ -2,6 +2,7 @@
 using namespace std;
 typedef long long ll;
 typedef long double ld;
+typedef __int128 LL;
 
 #define pb push_back
 #define ppp pop_back
@@ -24,6 +25,11 @@ template<class T> ostream& operator<<(ostream& out, queue<T> a) { while (!a.empt
 template<class T> ostream& operator<<(ostream& out, deque<T> a) { while (!a.empty()) { cout << a.front() << " "; a.pop_front(); } return out; }
 template<class T> void out(T a) { cout << a << endl; }
 void out() { cout << "OK" << endl; }
+istream& operator>>(istream& in, __int128& a) { int64_t b; cin >> b; a = b; return in; }
+ostream& operator<<(ostream& out, const __int128 a) {
+	unsigned __int128 b = a < 0 ? -a : a; char buf[128]; char* c = end(buf); do { --c; *c = "0123456789"[b % 10]; b /= 10; } while (b);
+	if (a < 0) { --c; *c = '-'; } int len = end(buf) - c; out.rdbuf()->sputn(c, len); return out;
+}
 
 void Solve() {
 	
