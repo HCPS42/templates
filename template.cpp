@@ -30,7 +30,7 @@ template<class T> ostream& operator<<(ostream& out, queue<T> a) { while (!a.empt
 template<class T> ostream& operator<<(ostream& out, deque<T> a) { while (!a.empty()) { cout << a.front() << " "; a.pop_front(); } return out; }
 template<class T> void out(T a) { cout << a << endl; }
 template<class T1, class T2> void out(T1 a, T2 b) { cout << a << " " << b << endl; }
-template<class T1, class T2, class T3> void out(T1 a, T2 b, T2 c) { cout << a << " " << b << " " << c << endl; }
+template<class T1, class T2, class T3> void out(T1 a, T2 b, T3 c) { cout << a << " " << b << " " << c << endl; }
 void out() { cout << "OK" << endl; }
 #if __SIZEOF_INT128__ >= 16
 typedef __int128 LL;
