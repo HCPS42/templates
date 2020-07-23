@@ -11,12 +11,18 @@ typedef string str;
 #define se second
 #define stie std::tie
 #define vec vector
-#define	forn(i, l, r) for (int i=l; i<=r; i++)
+#define forn(i, l, r) for (int i=l; i<=r; i++)
+#define emp empty
 #define ins insert
 #define cle clear
 #define era erase
+#define que queue
+#define pque priority_queue
+#define mset multiset
+#define deq deque
 #define con const
-#define ret return
+#define rsz resize
+#define ass assign
 
 template<class T> void mini(T& a, T b) { a = min(a, b); }
 template<class T> void maxi(T& a, T b) { a = max(a, b); }
@@ -28,10 +34,14 @@ template<class T1, class T2> ostream& operator<<(ostream& out, map<T1, T2> a) { 
 template<class T1, class T2> ostream& operator<<(ostream& out, unordered_map<T1, T2> a) { for (auto& i : a) out << i << "\n"; return out; }
 template<class T> ostream& operator<<(ostream& out, queue<T> a) { while (!a.empty()) { cout << a.front() << " "; a.pop(); } return out; }
 template<class T> ostream& operator<<(ostream& out, deque<T> a) { while (!a.empty()) { cout << a.front() << " "; a.pop_front(); } return out; }
+template<class T> ostream& operator<<(ostream& out, priority_queue<T> a) { while (!a.empty()) { cout << a.top() << "\n"; a.pop(); } return out; }
 template<class T> void out(T a) { cout << a << endl; }
 template<class T1, class T2> void out(T1 a, T2 b) { cout << a << " " << b << endl; }
 template<class T1, class T2, class T3> void out(T1 a, T2 b, T3 c) { cout << a << " " << b << " " << c << endl; }
 void out() { cout << "OK" << endl; }
+template<class T> void sort(vector<T>& a) { sort(a.begin(), a.end()); }
+template<class T> void uniq(vector<T>& a) { sort(a); a.erase(unique(a.begin(), a.end()), a.end()); }
+template<class T> vector<T> set_int(vector<T> a, vector<T> b) { sort(a); sort(b); vector<T> res; set_intersection(a.begin(), a.end(), b.begin(), b.end(), back_inserter(res)); return res; }
 #if __SIZEOF_INT128__ >= 16
 typedef __int128 LL;
 istream& operator>>(istream& in, __int128& a) { int64_t b; cin >> b; a = b; return in; }
