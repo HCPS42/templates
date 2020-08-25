@@ -64,9 +64,10 @@ pair<ll, ll> min_cost_flow(int src, int sink, ll max_flow = inf) {
 		prio[src] = 0;
 		cur_flow[src] = inf;
 		while (!pq.empty()) {
-			ll v = pq.top();
+			ll ver = pq.top();
 			pq.pop();
-			if ((v >> 32) != prio[v]) continue;
+			int v = ver;
+			if ((ver >> 32) != prio[v]) continue;
 			for (int i=0; i<g[v].size(); i++) {
 				Edge& e = g[v][i];
 				int u = e.to;
