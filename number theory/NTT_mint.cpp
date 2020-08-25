@@ -1,3 +1,6 @@
+#include <bits/stdc++.h>
+using namespace std;
+
 template<int m>
 struct mint {
 	int x;
@@ -41,12 +44,11 @@ struct mint {
 	bool operator!=(const mint& a) const { return x != a.x; }
 };
 
-const int p = 998244353;
-const int g = 518963131;
+const int p = 998244353; // 985661441
+const mint<p> root = 518963131; // 379359013
+const int K = 1 << 20; // be careful
 
 typedef vector<mint<p>> poly;
-
-const int K = 1 << 20;
 
 mint<p> prec_w[K / 2];
 mint<p> w[K];
@@ -54,7 +56,7 @@ mint<p> w[K];
 void init() {
 	prec_w[0] = 1;
 	for (int i = 1; i < K / 2; i++) {
-		prec_w[i] = prec_w[i-1] * g;
+		prec_w[i] = prec_w[i - 1] * root;
 	}
 	for (int i = 1; i < K; i *= 2) {
 		for (int j = 0; j < i; j++) {
@@ -80,12 +82,14 @@ void fft(mint<p>* in, mint<p>* out, int n, int k = 1) {
 
 void align(poly& a, poly& b) {
 	int n = a.size() + b.size() - 1;
-	while (a.size() < n) a.pb(0);
-	while (b.size() < n) b.pb(0);
+	while (a.size() < n) a.push_back(0);
+	while (b.size() < n) b.push_back(0);
 }
 
 poly eval(poly& a) {
-	while (__builtin_popcount(a.size()) != 1) a.pb(0);
+	while (__builtin_popcount(a.size()) != 1) {
+		a.push_back(0);
+	}
 	poly res(a.size());
 	fft(a.data(), res.data(), a.size());
 	return res;
@@ -93,11 +97,10 @@ poly eval(poly& a) {
 
 poly inter(poly a) {
 	int n = a.size();
-	poly inv(n);
-	fft(a.data(), inv.data(), n);
 	poly res(n);
+	fft(a.data(), res.data(), n);
 	for (int i = 0; i < n; i++) {
-		res[i] = inv[i] / n;
+		res[i] /= n;
 	}
 	reverse(res.begin() + 1, res.end());
 	return res;
@@ -112,4 +115,9 @@ poly mult(poly a, poly b) {
 	}
 	a = inter(a);
 	return a;
+}
+
+int main() {
+	init();
+	return 0;
 }

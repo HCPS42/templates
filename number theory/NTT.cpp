@@ -73,7 +73,7 @@ void align(poly& a, poly& b) {
 	while (b.size() < n) b.push_back(0);
 }
 
-poly eval(poly a) {
+poly eval(poly& a) {
 	while (__builtin_popcount(a.size()) != 1) {
 		a.push_back(0);
 	}
