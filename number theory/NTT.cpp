@@ -1,101 +1,110 @@
 #include <bits/stdc++.h>
 using namespace std;
-typedef long long ll;
 
-#define pb push_back
-#define ppp pop_back
-#define fi first
-#define se second
-#define pii pair<int,int>
+const int p = 998244353; // 985661441
+const int root = 518963131; // 379359013
+const int K = 1 << 20; // be careful
 
-const ll P[2] = {998244353, 985661441};
-const ll G[2] = {518963131, 379359013};
+int add(int a, int b) {
+	a += b;
+	if (a >= p) a -= p;
+	return a;
+}
 
-typedef vector<ll> poly;
+int sub(int a, int b) {
+	a -= b;
+	if (a < 0) a += p;
+	return a;
+}
 
-const int K = 1 << 20;
+int mult(int a, int b) {
+	return a * 1ll * b % p;
+}
 
-ll precalc_w[K/2];
-ll w[K];
-
-ll binpow(ll a, ll b, ll p) {
-	ll res = 1;
+int binpow(int a, int64_t b) {
+	int res = 1;
 	while (b) {
-		if (b & 1) res = res * a % p;
+		if (b & 1) res = mult(res, a);
 		b >>= 1;
-		a = a * a % p;
+		a = mult(a, a);
 	}
 	return res;
 }
 
-void init(ll p, ll g) {
-	precalc_w[0] = 1;
-	for (int i=1; i<K/2; i++) {
-		precalc_w[i] = precalc_w[i-1] * g % p;
+int divi(int a, int b) {
+	return mult(a, binpow(b, p - 2));
+}
+
+typedef vector<int> poly;
+
+int prec_w[K / 2];
+int w[K];
+
+void init() {
+	prec_w[0] = 1;
+	for (int i = 1; i < K / 2; i++) {
+		prec_w[i] = mult(prec_w[i-1], root);
 	}
-	for (int i=1; i<K; i*=2) {
-		for (int j=0; j<i; j++) {
-			w[i+j] = precalc_w[K / (2 * i) * j];
+	for (int i = 1; i < K; i *= 2) {
+		for (int j = 0; j < i; j++) {
+			w[i + j] = prec_w[K / (2 * i) * j];
 		}
 	}
 }
 
-void fft(ll *in, ll *out, int n, ll p, int k = 1) {
+void fft(int* in, int* out, int n, int k = 1) {
 	if (n == 1) {
 		*out = *in;
 		return;
 	}
 	n /= 2;
-	fft(in, out, n, p, 2*k);
-	fft(in+k, out+n, n, p, 2*k);
-	for (int i=0; i<n; i++) {
-		ll t = out[i+n] * w[i+n] % p;
-		out[i+n] = out[i] - t;
-		if (out[i+n] < 0) out[i+n] += p;
-		out[i] += t;
-		if (out[i] >= p) out[i] -= p;
+	fft(in, out, n, 2 * k);
+	fft(in + k, out + n, n, 2 * k);
+	for (int i = 0; i < n; i++) {
+		int t = mult(out[i + n], w[i + n]);
+		out[i + n] = sub(out[i], t);
+		out[i] = add(out[i], t);
 	}
 }
 
-void align(poly &a, poly &b) {
+void align(poly& a, poly& b) {
 	int n = a.size() + b.size() - 1;
-	while (a.size() < n) a.pb(0);
-	while (b.size() < n) b.pb(0);
+	while (a.size() < n) a.push_back(0);
+	while (b.size() < n) b.push_back(0);
 }
 
-poly eval(poly a, ll p) {
-	while (__builtin_popcount(a.size()) != 1) a.pb(0);
+poly eval(poly a) {
+	while (__builtin_popcount(a.size()) != 1) {
+		a.push_back(0);
+	}
 	poly res(a.size());
-	fft(a.data(), res.data(), a.size(), p);
+	fft(a.data(), res.data(), a.size());
 	return res;
 }
 
-poly inter(poly a, ll p) {
+poly inter(poly a) {
 	int n = a.size();
 	poly inv(n);
-	fft(a.data(), inv.data(), n, p);
+	fft(a.data(), inv.data(), n);
 	poly res(n);
-	for (int i=0; i<n; i++) {
-		res[i] = inv[i] * binpow(n, p-2, p) % p;
+	for (int i = 0; i < n; i++) {
+		res[i] = divi(inv[i], n);
 	}
-	reverse(res.begin()+1, res.end());
+	reverse(res.begin() + 1, res.end());
 	return res;
 }
 
-poly mult(poly a, poly b, ll p) {
+poly mult(poly a, poly b) {
 	align(a, b);
-	a = eval(a, p);
-	b = eval(b, p);
-	for (int i=0; i<a.size(); i++) a[i] = a[i] * b[i] % p;
-	return inter(a, p);
+	a = eval(a);
+	b = eval(b);
+	for (int i = 0; i < a.size(); i++) {
+		a[i] = mult(a[i], b[i]);
+	}
+	return inter(a);
 }
 
 int main() {
-    ios_base::sync_with_stdio(0); cin.tie(0);
-#ifdef LOCAL
-    freopen("input.txt", "r", stdin);
-#endif
-	init();
-	
+    init();
 	return 0;
 }
