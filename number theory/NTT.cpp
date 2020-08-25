@@ -43,7 +43,7 @@ int w[K];
 void init() {
 	prec_w[0] = 1;
 	for (int i = 1; i < K / 2; i++) {
-		prec_w[i] = mult(prec_w[i-1], root);
+		prec_w[i] = mult(prec_w[i - 1], root);
 	}
 	for (int i = 1; i < K; i *= 2) {
 		for (int j = 0; j < i; j++) {
