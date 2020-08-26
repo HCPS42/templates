@@ -2,7 +2,6 @@
 using namespace std;
 
 const int p = 998244353; // 985661441
-const int root = 518963131; // 379359013
 const int K = 1 << 20; // be careful
 
 int add(int a, int b) {
@@ -34,6 +33,8 @@ int binpow(int a, int64_t b) {
 int divi(int a, int b) {
 	return mult(a, binpow(b, p - 2));
 }
+
+const int root = binpow(3, (p - 1) / K); // 3 is a primitive root mod p
 
 typedef vector<int> poly;
 

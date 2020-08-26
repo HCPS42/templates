@@ -45,8 +45,8 @@ struct mint {
 };
 
 const int p = 998244353; // 985661441
-const mint<p> root = 518963131; // 379359013
 const int K = 1 << 20; // be careful
+const mint<p> root = binpow(mint<p>(3), (p - 1) / K); // 3 is a primitive root mod p
 
 typedef vector<mint<p>> poly;
 
