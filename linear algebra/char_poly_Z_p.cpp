@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// task: https://official.contest.yandex.com/ptz-summer-2020/contest/19423/problems/K6/?success=33867899#7/2020_08_27/MTr3ZtBTrK
+
 template<int m>
 struct mint {
 	int x;
