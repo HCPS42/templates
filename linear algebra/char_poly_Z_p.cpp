@@ -262,7 +262,6 @@ poly char_poly(matrix a) {
 		cur *= g;
 	}
 	b = inter(b);
-	assert(b.size() == n + 1);
 	return b;
 }
 
