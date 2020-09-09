@@ -33,7 +33,7 @@ struct lint {
 			a.push_back(x);
 		}
 		trim();
-    }
+	}
 	friend istream& operator>>(istream& in, lint& a) {
 		string b;
 		in >> b;
@@ -49,7 +49,7 @@ struct lint {
 			out << setw(base_digits) << setfill('0') << a.a[i];
 		}
 		return out;
-    }
+	}
 	void trim() {
 		while (!a.empty() && !a.back()) {
 			a.pop_back();
@@ -141,7 +141,7 @@ struct lint {
 			// asm("divl %%ecx" : "=a"(carry), "=d"(a[i]) : "A"(cur), "c"(base));
 		}
 		trim();
-    }
+	}
 	lint operator*(int64_t b) const {
 		lint res = *this;
 		res *= b;
@@ -172,7 +172,7 @@ struct lint {
 		q.trim();
 		r.trim();
 		return {q, r / norm};
-    }
+	}
 	lint operator/(const lint& b) const {
 		return div_mod(*this, b).first;
 	}
@@ -203,7 +203,7 @@ struct lint {
 			res = (a[i] + res * (int64_t) base) % b;
 		}
 		return res * sign;
-    }
+	}
 	void operator+=(const lint& b) {
 		*this = *this + b;
 	}
@@ -229,7 +229,7 @@ struct lint {
 			}
 		}
 		return 0;
-    }
+	}
 	bool operator>(const lint& b) const {
 		return b < *this;
 	}
