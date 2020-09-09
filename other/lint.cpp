@@ -40,7 +40,7 @@ struct lint {
 		a.read(b);
 		return in;
 	}
-	friend ostream& operator<<(ostream& out, lint& a) {
+	friend ostream& operator<<(ostream& out, const lint& a) {
 		if (a.sign == -1) {
 			out << "-";
 		}
@@ -73,6 +73,12 @@ struct lint {
 		}
 		return res * sign;
 	}
+	explicit operator int() const {
+        return int64_t();
+	}
+	explicit operator bool() const {
+        return !is_zero();
+	}
 	void operator=(const lint& b) {
 		sign = b.sign;
 		a = b.a;
@@ -84,10 +90,10 @@ struct lint {
 			sign = -1;
 			b = -b;
 		}
-		do {
+		while (b) {
 			a.push_back(b % base);
 			b /= base;
-		} while (b);
+		}
 	}
 	lint operator+(const lint& b) const {
 		if (sign != b.sign) {
