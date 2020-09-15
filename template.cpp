@@ -36,9 +36,9 @@ template<class T> ostream& operator<<(ostream& out, set<T> a) { for (auto& i : a
 template<class T> ostream& operator<<(ostream& out, multiset<T> a) { for (auto& i : a) out << i << " "; return out; }
 template<class T1, class T2> ostream& operator<<(ostream& out, map<T1, T2> a) { for (auto& i : a) out << i << "\n"; return out; }
 template<class T1, class T2> ostream& operator<<(ostream& out, unordered_map<T1, T2> a) { for (auto& i : a) out << i << "\n"; return out; }
-template<class T> ostream& operator<<(ostream& out, queue<T> a) { while (!a.empty()) { cout << a.front() << " "; a.pop(); } return out; }
-template<class T> ostream& operator<<(ostream& out, deque<T> a) { while (!a.empty()) { cout << a.front() << " "; a.pop_front(); } return out; }
-template<class T> ostream& operator<<(ostream& out, priority_queue<T> a) { while (!a.empty()) { cout << a.top() << "\n"; a.pop(); } return out; }
+template<class T> ostream& operator<<(ostream& out, queue<T> a) { while (!a.empty()) { out << a.front() << " "; a.pop(); } return out; }
+template<class T> ostream& operator<<(ostream& out, deque<T> a) { while (!a.empty()) { out << a.front() << " "; a.pop_front(); } return out; }
+template<class T> ostream& operator<<(ostream& out, priority_queue<T> a) { while (!a.empty()) { out << a.top() << "\n"; a.pop(); } return out; }
 template<class T> void out(T a) { cout << a << endl; }
 template<class T1, class T2> void out(T1 a, T2 b) { cout << a << " " << b << endl; }
 template<class T1, class T2, class T3> void out(T1 a, T2 b, T3 c) { cout << a << " " << b << " " << c << endl; }
@@ -53,8 +53,8 @@ clock_t start_time; double get_time() { return (double)(clock() - start_time) / 
 typedef __int128 LL;
 istream& operator>>(istream& in, __int128& a) { int64_t b; cin >> b; a = b; return in; }
 ostream& operator<<(ostream& out, const __int128 a) {
-    unsigned __int128 b = a < 0 ? -a : a; char buf[128]; char* c = end(buf); do { --c; *c = "0123456789"[b % 10]; b /= 10; } while (b);
-    if (a < 0) { --c; *c = '-'; } int len = end(buf) - c; out.rdbuf()->sputn(c, len); return out;
+	unsigned __int128 b = a < 0 ? -a : a; char buf[128]; char* c = end(buf); do { --c; *c = "0123456789"[b % 10]; b /= 10; } while (b);
+	if (a < 0) { --c; *c = '-'; } int len = end(buf) - c; out.rdbuf()->sputn(c, len); return out;
 }
 #endif
 
@@ -65,7 +65,7 @@ void Solve() {
 int main() {
 	ios_base::sync_with_stdio(0); cin.tie(0);
 #ifdef LOCAL
-    freopen("input.txt", "r", stdin);
+	freopen("input.txt", "r", stdin);
 #endif
 	start_time = clock();
 	Solve();
