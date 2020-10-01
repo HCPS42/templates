@@ -31,10 +31,10 @@ struct mint {
 	}
 	mint& operator*=(const mint& a) { x = fast_mod((uint64_t) x * a.x); return *this; }
 	mint& operator/=(const mint& a) { return *this *= a.inv(); }
-	friend mint operator+(const mint& a, const mint& b) { return mint(a) += b; }
-	friend mint operator-(const mint& a, const mint& b) { return mint(a) -= b; }
-	friend mint operator*(const mint& a, const mint& b) { return mint(a) *= b; }
-	friend mint operator/(const mint& a, const mint& b) { return mint(a) /= mint(b); }
+	friend mint operator+(mint a, const mint& b) { return a += b; }
+	friend mint operator-(mint a, const mint& b) { return a -= b; }
+	friend mint operator*(mint a, const mint& b) { return a *= b; }
+	friend mint operator/(mint a, const mint& b) { return a /= b; }
 	mint& operator++() { x = x == m - 1 ? 0 : x + 1; return *this; }
 	mint& operator--() { x = x == 0 ? m - 1 : x - 1; return *this; }
 	mint operator++(int) { mint a = *this; ++*this; return a; }
