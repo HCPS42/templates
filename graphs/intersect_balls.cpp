@@ -9,6 +9,7 @@ typedef long long ll;
 #define se second
 #define prev previous
 
+// https://official.contest.yandex.ru/ptz-summer-2019/contest/13458/problems/I5/
 // k balls are given.
 // How many vertices lie in at least (k - 1) of them?
 
@@ -233,10 +234,6 @@ ll solve() {
 }
 
 int main() {
-    ios_base::sync_with_stdio(0); cin.tie(0);
-#ifdef LOCAL
-    freopen("input.txt", "r", stdin);
-#endif
 	init();
 	int T;
 	cin >> T;
