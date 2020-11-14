@@ -1,6 +1,5 @@
 #include <bits/stdc++.h>
 using namespace std;
-typedef long long ll;
 
 typedef double ftype;
 typedef complex<ftype> point;
@@ -81,20 +80,24 @@ bool cmp(const quater &a, const quater &b) {
 
 // Любой вектор, ортогональный данному.
 quater ortho(quater v) {
-    if(abs(v.qy) > eps)
+    if(abs(v.qy) > eps) {
         return vec(v.qy, -v.qx, 0);
-    else
+    }
+    else {
         return vec(v.qz, 0, -v.qx);
+    }
 }
 
 // Кватернион, задающий вращение от a к b по минимальному углу. 
 quater min_rotation(quater a, quater b) {
     a /= abs(a);
     b /= abs(b);
-    if(cmp(a, -b)) // Вырожденный случай :(
+    if(cmp(a, -b)) { // Вырожденный случай :(
         return rotation(ortho(b), pi);
-    else 
-		return conj(a * (a + b));
+    }
+    else {
+        return conj(a * (a + b));
+    }
 }
 
 // Угол поворота из [-pi; pi], который задаётся кватернионом.
@@ -110,17 +113,12 @@ quater basis_rotation(quater nx, quater ny) {
     quater a = min_rotation(nx, ex);
     ny = conj(ny, a);
     quater b = min_rotation(ny, ey);
-    if(cmp(ny, -ey))
+    if(cmp(ny, -ey)) {
         b = rotation(ex, pi);
+    }
     return b * a;
 }
 
 int main() {
-	ios_base::sync_with_stdio(0); cin.tie(0);
-#ifdef LOCAL
-	freopen("input.txt", "r", stdin);
-#endif
-    
-	
     return 0;
 }
