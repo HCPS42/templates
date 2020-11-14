@@ -1,30 +1,23 @@
 #include <bits/stdc++.h>
 using namespace std;
-typedef long long ll;
-
-#define pb push_back
-#define ppp pop_back
-#define fi first
-#define se second
-#define pii pair<int,int>
 
 struct Node {
     int key;
-    ll sum;
+    int64_t sum;
     Node *left, *right, *parent;
-    Node(int key, ll sum, Node *left, Node *right, Node *parent) : key(key), sum(sum), left(left), right(right), parent(parent) {}
+    Node(int key, int64_t sum, Node *left, Node *right, Node *parent) : key(key), sum(sum), left(left), right(right), parent(parent) {}
 };
 
 void update(Node *v) {
-    if (v == NULL) return;
-    v->sum = v->key + (v->left != NULL ? v->left->sum : 0) + (v->right != NULL ? v->right->sum : 0);
-    if (v->left != NULL) v->left->parent = v;
-    if (v->right != NULL) v->right->parent = v;
+    if (!v) return;
+    v->sum = v->key + (v->left ? v->left->sum : 0) + (v->right ? v->right->sum : 0);
+    if (v->left) v->left->parent = v;
+    if (v->right) v->right->parent = v;
 }
 
 void small_rotation(Node *v) {
     Node* parent = v->parent;
-    if (parent == NULL) return;
+    if (!parent) return;
     Node *grandparent = v->parent->parent;
     if (parent->left == v) {
         parent->left = v->right;
@@ -37,7 +30,7 @@ void small_rotation(Node *v) {
     update(parent);
     update(v);
     v->parent = grandparent;
-    if (grandparent != NULL) {
+    if (grandparent) {
         if (grandparent->left == parent) grandparent->left = v;
         else grandparent->right = v;
     }
@@ -59,9 +52,9 @@ void big_rotation(Node *v) {
 }
 
 void splay(Node *&root, Node *v) {
-    if (v == NULL) return;
-    while (v->parent != NULL) {
-        if (v->parent->parent == NULL) {
+    if (!v) return;
+    while (v->parent) {
+        if (!v->parent->parent) {
             small_rotation(v);
             break;
         }
@@ -72,8 +65,8 @@ void splay(Node *&root, Node *v) {
 
 Node* find(Node *&root, int key) {
     Node *v = root, *last = root, *next = NULL;
-    while (v != NULL) {
-        if (v->key >= key && (next == NULL || v->key < next->key)) next = v;
+    while (v) {
+        if (v->key >= key && (!next || v->key < next->key)) next = v;
         last = v;
         if (v->key == key) break;
         if (v->key < key) v = v->right;
@@ -86,22 +79,22 @@ Node* find(Node *&root, int key) {
 void split(Node *root, int key, Node *&left, Node *&right) {
     right = find(root, key);
     splay(root, right);
-    if (right == NULL) {
+    if (!right) {
         left = root;
         return;
     }
     left = right->left;
     right->left = NULL;
-    if (left != NULL) left->parent = NULL;
+    if (left) left->parent = NULL;
     update(left);
     update(right);
 }
 
 Node* merge(Node *left, Node *right) {
-    if (left == NULL) return right;
-    if (right == NULL) return left;
+    if (!left) return right;
+    if (!right) return left;
     Node *min_right = right;
-    while (min_right->left != NULL) min_right = min_right->left;
+    while (min_right->left) min_right = min_right->left;
     splay(right, min_right);
     right->left = left;
     update(right);
@@ -113,42 +106,38 @@ Node *root = NULL;
 void insert(int x) {
     Node *left = NULL, *right = NULL, *new_node = NULL;
     split(root, x, left, right);
-    if (right == NULL || right->key != x) new_node = new Node(x, x, NULL, NULL, NULL);
+    if (!right || right->key != x) new_node = new Node(x, x, NULL, NULL, NULL);
     root = merge(merge(left, new_node), right);
 }
 
 void erase(int x) {
     Node *left = NULL, *right = NULL;
     split(root, x, left, right);
-    if (right != NULL && right->key == x) {
+    if (right && right->key == x) {
         right = right->right;
-        if (right != NULL) right->parent = NULL;
+        if (right) right->parent = NULL;
     }
     root = merge(left, right);
 }
 
 bool find(int x) {
     find(root, x);
-    if (root != NULL && root->key == x) return true;
+    if (root && root->key == x) return true;
     return false;
 }
 
-ll sum(int l, int r) {
+int64_t sum(int l, int r) {
     //returns the sum of all keys of the splay tree in the range of [l, r]
-    if (root == NULL) return 0;
+    if (!root) return 0;
     Node *left = NULL, *middle = NULL, *right = NULL;
     split(root, l, left, middle);
-    split(middle, r+1, middle, right);
-    ll res = 0;
-    if (middle != NULL) res = middle->sum;
+    split(middle, r + 1, middle, right);
+    int64_t res = 0;
+    if (middle) res = middle->sum;
     root = merge(merge(left, middle), right);
     return res;
 }
 
 int main() {
-    ios_base::sync_with_stdio(0); cin.tie(0);
-#ifdef LOCAL
-    freopen("input.txt", "r", stdin);
-#endif
-    
+    return 0;
 }
