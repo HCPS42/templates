@@ -11,36 +11,36 @@ int rig[N];
 bool used[N];
 
 bool dfs(int v) {
-	used[v] = 1;
-	for (int u : g[v]) {
-		if (lef[u] != v) {
-			bool ok;
-			if (!lef[u]) ok = 1;
-			else if (!used[lef[u]]) {
-				ok = dfs(lef[u]);
-			}
-			else ok = 0;
-			if (ok) {
-				rig[v] = u;
-				lef[u] = v;
-				return 1;
-			}
-		}
-	}
-	return 0;
+    used[v] = 1;
+    for (int u : g[v]) {
+        if (lef[u] != v) {
+            bool ok;
+            if (!lef[u]) ok = 1;
+            else if (!used[lef[u]]) {
+                ok = dfs(lef[u]);
+            }
+            else ok = 0;
+            if (ok) {
+                rig[v] = u;
+                lef[u] = v;
+                return 1;
+            }
+        }
+    }
+    return 0;
 }
 
 int Kuhn(int n) {
-	int res = 0;
-	for (int i=1; i<=n; i++) {
-		for (int i=1; i<=n; i++) {
-			used[i] = 0;
-		}
-		res += dfs(i);
-	}
-	return res;
+    int res = 0;
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= n; j++) {
+            used[j] = 0;
+        }
+        res += dfs(i);
+    }
+    return res;
 }
 
 int main() {
-	return 0;
+    return 0;
 }
