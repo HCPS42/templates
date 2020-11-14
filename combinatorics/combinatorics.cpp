@@ -1,33 +1,32 @@
 #include <bits/stdc++.h>
 using namespace std;
+
 typedef long long ll;
 
-#define pb push_back
-#define ppp pop_back
-#define pii pair<int, int>
-#define fi first
-#define se second
-#define div divi
-
 const int N = 1e5 + 5;
-const ll p = 1e9 + 7;
+const int p = 1e9 + 7;
 
-ll fac[N], inv[N];
+int fac[N]
+int inv[N];
 
-inline ll mult(ll a, ll b) {
-    return ((a * b) % p + p) % p;
+int mult(int a, int b) {
+    return a * 1ll * b % p;
 }
 
-inline ll add(ll a, ll b) {
-    return ((a + b) % p + p) % p;
+int add(int a, int b) {
+    a += b;
+    if (a >= p) a -= p;
+    return a;
 }
 
-inline ll sub(ll a, ll b) {
-    return ((a - b) % p + p) % p;
+int sub(int a, int b) {
+    a -= b;
+    if (a < 0) a += p;
+    return a;
 }
 
-ll binpow(ll a, ll b) {
-    ll res = 1;
+int binpow(int a, int64_t b) {
+    int res = 1;
     while (b) {
         if (b & 1) res = mult(res, a);
         b >>= 1;
@@ -36,27 +35,27 @@ ll binpow(ll a, ll b) {
     return res;
 }
 
-inline ll div(ll a, ll b) {
-    return mult(a, binpow(b, p-2));
+int divi(int a, int b) {
+    return mult(a, binpow(b, p - 2));
 }
 
-ll c(int a, int b) {
+int c(int a, int b) {
     if (b < 0 || a < b) return 0;
-    return mult(mult(fac[a], inv[b]), inv[a-b]);
+    return mult(mult(fac[a], inv[b]), inv[a - b]);
 }
 
-void precalc() {
+void init() {
     fac[0] = 1;
-    for (int i=1; i<N; i++) fac[i] = mult(fac[i-1], i);
-    inv[N-1] = binpow(fac[N-1], p-2);
-    for (int i=N-1; i>=1; i--) inv[i-1] = mult(inv[i], i);
+    for (int i = 1; i < N; i++) {
+        fac[i] = mult(fac[i - 1], i);
+    }
+    inv[N - 1] = divi(1, fac[N - 1]);
+    for (int i = N - 1; i >= 1; i--) {
+        inv[i - 1] = mult(inv[i], i);
+    }
 }
 
 int main() {
-    ios_base::sync_with_stdio(0); cin.tie(0);
-#ifdef LOCAL
-    freopen("input.txt", "r", stdin);
-#endif
-    precalc();
+    init();
     return 0;
 }
