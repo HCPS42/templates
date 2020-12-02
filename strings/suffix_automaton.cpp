@@ -14,7 +14,7 @@ void add_letter(int c) {
     int p = nw;
     nw = sz++;
     len[nw] = len[p] + 1;
-    firstpos[nw] = len[nw];
+    first_pos[nw] = len[nw];
     while (to[p][c] == 0) {
         to[p][c] = nw;
         p = link[p];
@@ -32,7 +32,7 @@ void add_letter(int c) {
     len[cl] = len[p] + 1;
     link[cl] = link[q];
     link[nw] = link[q] = cl;
-    first_pos[clone] = first_pos[q];
+    first_pos[cl] = first_pos[q];
     for (int i = 0; i < 26; i++) {
         to[cl][i] = to[q][i];
     }
