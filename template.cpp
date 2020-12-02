@@ -44,6 +44,7 @@ template<class T1, class T2> void out(T1 a, T2 b) { cout << a << " " << b << end
 template<class T1, class T2, class T3> void out(T1 a, T2 b, T3 c) { cout << a << " " << b << " " << c << endl; }
 template<class T1, class T2, class T3, class T4> void out(T1 a, T2 b, T3 c, T4 d) { cout << a << " " << b << " " << c << " " << d << endl; }
 template<class T> void out(vector<vector<T>> a) { for (vector<T> i : a) out(i); }
+template<class T> void out_(T a[], int n, bool z = 0) { for (int i = (z ? 0 : 1); i <= n; i++) cout << a[i] << " "; cout << endl; }
 void out() { cout << "OK" << endl; }
 template<class T> void sort(vector<T>& a) { sort(a.begin(), a.end()); }
 template<class T> void uniq(vector<T>& a) { sort(a); a.erase(unique(a.begin(), a.end()), a.end()); }
