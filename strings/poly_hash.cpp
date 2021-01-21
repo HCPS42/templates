@@ -44,7 +44,7 @@ struct mint {
     bool operator!=(const mint& a) const { return x != a.x; }
 };
 
-template<int m>
+template <int m>
 struct PolyHash {
     mint<m> x;
     PolyHash(int x) : x(x) {}
@@ -52,17 +52,18 @@ struct PolyHash {
     vector<mint<m>> pref;
     void init(vector<int>& a) {
         int n = a.size();
-        pw.assign(n, 0);
+        pw.assign(n + 1, 0);
         pref.assign(n, 0);
         pw[0] = 1;
         pref[0] = a[0];
-        for (int i=1; i<n; i++) {
+        for (int i = 1; i < n; i++) {
             pref[i] = pref[i - 1] * x + a[i];
             pw[i] = pw[i - 1] * x;
         }
+        pw[n] = pw[n - 1] * x;
     }
     mint<m> get(int l, int r) {
-        return pref[r] - pref[l - 1] * pw[r - l + 1];
+        return pref[r] - (l ? pref[l - 1] : 0) * pw[r - l + 1];
     }
 };
 
