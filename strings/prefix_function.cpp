@@ -10,7 +10,7 @@ void prefix_function(string s) {
     pref[0] = 0;
     int bord = 0;
     for (int i = 1; i < n; i++) {
-        while (bord > 0 && s[i] != s[bord]) border = pref[bord - 1];
+        while (bord > 0 && s[i] != s[bord]) bord = pref[bord - 1];
         if (s[i] == s[bord]) bord++;
         else bord = 0;
         pref[i] = bord;
