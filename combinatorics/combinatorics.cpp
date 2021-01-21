@@ -6,7 +6,7 @@ typedef long long ll;
 const int N = 1e5 + 5;
 const int p = 1e9 + 7;
 
-int fac[N]
+int fac[N];
 int inv[N];
 
 int mult(int a, int b) {
@@ -39,7 +39,7 @@ int divi(int a, int b) {
     return mult(a, binpow(b, p - 2));
 }
 
-int c(int a, int b) {
+int C(int a, int b) {
     if (b < 0 || a < b) return 0;
     return mult(mult(fac[a], inv[b]), inv[a - b]);
 }
