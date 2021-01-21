@@ -61,6 +61,8 @@ ostream& operator<<(ostream& out, const __int128 a) {
 
 void Solve() {
 
+
+	
 }
 
 int main() {
