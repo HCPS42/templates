@@ -60,7 +60,7 @@ ostream& operator<<(ostream& out, const __int128 a) {
 #endif
 
 void Solve() {
-    out("lol");
+	
 }
 
 int main() {
