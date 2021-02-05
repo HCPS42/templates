@@ -44,7 +44,7 @@ void dfs_hld(int v = 1) {
 
 void init() {
     dfs_par();
-    for (int i=0; i<N; i++) {
+    for (int i = 0; i < N; i++) {
         vector<int> cur;
         for (int u : g[i]) {
             if (u != par[i]) {

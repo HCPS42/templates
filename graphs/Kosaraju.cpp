@@ -47,6 +47,5 @@ void kosaraju(int n) {
 
 int main() {
     // read
-    Kosaraju(n);
     return 0;
 }
