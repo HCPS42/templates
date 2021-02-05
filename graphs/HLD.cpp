@@ -14,7 +14,7 @@ int par[N];
 // [tin[v]; tout[v]] --- subtree of v
 // [tin[nxt[v]]; tin[v]] --- path from nxt[v] to v
 
-void dfs_par(int v = 1, int p = 0) {
+void dfs_par(int v = 1, int p = 1) {
     par[v] = p;
     for (int u : g[v]) {
         if (u == p) continue;
