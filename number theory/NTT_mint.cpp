@@ -5,7 +5,7 @@ template<int m>
 struct mint {
     int x;
     mint(int64_t a = 0) { if (a < 0) a = a % m + m; if (a >= m) a %= m; x = a; }
-    friend istream& operator>>(istream& in, mint& a) { int64_t y; cin >> y; a = y; return in; }
+    friend istream& operator>>(istream& in, mint& a) { int64_t y; in >> y; a = y; return in; }
     friend ostream& operator<<(ostream& out, mint a) { return out << a.x; }
     explicit operator int() const { return x; }
     static int mod_inv(int a, int mod = m) {
