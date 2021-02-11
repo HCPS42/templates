@@ -1,60 +1,66 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-//https://habr.com/ru/post/113642/
+// https://habr.com/ru/post/113642/
+// https://codeforces.com/problemset/problem/528/D
+
+const int K = 1 << 20; // check
+const double pi = acos(-1);
 
 typedef complex<double> C;
 typedef vector<C> poly_C;
 typedef vector<int64_t> poly;
-const double pi = acos(-1);
 
-const int K = 1 << 22;
 C w[K];
-int index[K];
+int id[K];
 
 void init(int n) {
-    for (int i=0; i<n; i++) {
+    for (int i = 0; i < n; i++) {
         w[i] = polar(1.0, 2 * pi * i / n);
     }
     int k = 0;
     while ((1 << k) < n) k++;
-    index[0] = 0;
-    int high1 = -1;
-    for (int i=1; i<n; i++) {
-        if ((i & (i - 1)) == 0) high1++;
-        index[i] = index[i ^ (1 << high1)];
-        index[i] |= (1 << (k - high1 - 1));
+    id[0] = 0;
+    int bit = -1;
+    for (int i = 1; i < n; i++) {
+        if ((i & (i - 1)) == 0) bit++;
+        id[i] = id[i ^ (1 << bit)];
+        id[i] |= 1 << (k - bit - 1);
     }
 }
 
 poly_C fft(const poly_C& a) {
     int n = a.size();
-    poly_C cur(n), nw_cur(n);
-    for (int i=0; i<n; i++) {
-        cur[i] = a[index[i]];
-    }
-    for (int len=1; len<n; len*=2) {
-        int rig_step = n / (len * 2);
-        int ptr_dest = 0;
-        while (ptr_dest < n) {
-            for (int i=0; i<len; i++) {
-                C val = w[i * rig_step] * cur[ptr_dest + len];
-                nw_cur[ptr_dest] = cur[ptr_dest] + val;
-                nw_cur[ptr_dest + len] = cur[ptr_dest] - val;
-                ptr_dest++;
-            }
-            ptr_dest += len;
+    poly_C cur(n, 0);
+    poly_C nxt(n, 0);
+    for (int i = 0; i < n; i++) {
+        if (id[i] < n) {
+            cur[i] = a[id[i]];
         }
-        swap(cur, nw_cur);
+    }
+    for (int len = 1; len < n; len *= 2) {
+        int k = n / (len * 2);
+        int ptr = 0;
+        while (ptr < n) {
+            for (int i = 0; i < len; i++) {
+                C t = w[i * k] * cur[ptr + len];
+                nxt[ptr] = cur[ptr] + t;
+                nxt[ptr + len] = cur[ptr] - t;
+                ptr++;
+            }
+            ptr += len;
+        }
+        swap(cur, nxt);
     }
     return cur;
 }
 
-poly_C inter(const poly_C& a) {
+poly inter(const poly_C& a) {
     int n = a.size();
-    poly_C res = fft(a);
-    for (int i=0; i<n; i++) {
-        res[i] /= n;
+    poly_C inv = fft(a);
+    poly res(n);
+    for (int i = 0; i < n; i++) {
+        res[i] = round(inv[i].real() / n);
     }
     reverse(res.begin() + 1, res.end());
     return res;
@@ -68,19 +74,17 @@ void align(poly_C& a, poly_C& b) {
 }
 
 poly mult(poly a, poly b) {
-    poly_C A(a.size()), B(b.size());
-    for (int i=0; i<a.size(); i++) A[i] = a[i];
-    for (int i=0; i<b.size(); i++) B[i] = b[i];
+    poly_C A(a.size());
+    poly_C B(b.size());
+    for (int i = 0; i < a.size(); i++) A[i] = a[i];
+    for (int i = 0; i < b.size(); i++) B[i] = b[i];
     align(A, B);
     int n = A.size();
     init(n);
     A = fft(A);
     B = fft(B);
-    for (int i=0; i<n; i++) A[i] *= B[i];
-    A = inter(A);
-    poly res(n);
-    for (int i=0; i<n; i++) res[i] = round(real(A[i]));
-    return res;
+    for (int i = 0; i < n; i++) A[i] *= B[i];
+    return inter(A);
 }
 
 int main() {
