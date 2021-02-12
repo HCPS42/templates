@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int K = 1 << 20; // be careful
+const int K = 1 << 20; // check
 const double pi = acos(-1);
 
 typedef complex<double> C;

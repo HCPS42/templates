@@ -1,28 +1,31 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-typedef long long ll;
-const int N = 1 << 17;
-const ll p = 1e9 + 7;
+// https://codeforces.com/problemset/problem/914/G
 
-ll add(ll a, ll b) {
+// const int N = 1 << 20;
+// int a[N];
+
+const int p = 1e9 + 7;
+
+int add(int a, int b) {
     a += b;
     if (a >= p) a -= p;
     return a;
 }
 
-ll sub(ll a, ll b) {
+int sub(int a, int b) {
     a -= b;
     if (a < 0) a += p;
     return a;
 }
 
-ll mult(ll a, ll b) {
-    return (a * b) % p;
+int mult(int a, int b) {
+    return a * 1ll * b % p;
 }
 
-ll binpow(ll a, ll b) {
-    ll res = 1;
+int binpow(int a, int64_t b) {
+    int res = 1;
     while (b) {
         if (b & 1) res = mult(res, a);
         b >>= 1;
@@ -31,99 +34,85 @@ ll binpow(ll a, ll b) {
     return res;
 }
 
-ll divi(ll a, ll b) {
+int divi(int a, int b) {
     return mult(a, binpow(b, p - 2));
 }
 
-void reduce(ll &a) {
-    a %= p;
-    if (a < 0) a += p;
-}
-
-void tr_xor(ll *from, ll *to) {
-    if (to - from == 1) return;
-    ll *mid = from + (to - from) / 2;
-    tr_xor(from, mid);
-    tr_xor(mid, to);
-    for (int i = 0; i < mid - from; i++) {
-        ll a = *(from + i);
-        ll b = *(mid + i);
-        *(from + i) = add(a, b);
-        *(mid + i) = sub(a, b);
+void tr_xor(int* l, int* r) {
+    if (r - l == 1) return;
+    int* m = l + (r - l) / 2;
+    tr_xor(l, m);
+    tr_xor(m, r);
+    for (int i = 0; i < m - l; i++) {
+        int a = *(l + i);
+        int b = *(m + i);
+        *(l + i) = add(a, b);
+        *(m + i) = sub(a, b);
     }
 }
 
-void inv_xor(ll *from, ll *to) {
-    tr_xor(from, to);
-    int n = to - from;
-    ll inv_n = divi(1, n);
+void inv_xor(int* l, int* r) {
+    tr_xor(l, r);
+    int n = r - l;
+    int inv_n = divi(1, n);
     for (int i = 0; i < n; i++) {
-        *(from + i) = mult(*(from + i), inv_n);
+        *(l + i) = mult(*(l + i), inv_n);
     }
 }
 
-void conv_xor(ll *from1, ll *to1, ll *from2, ll *to2) {
-    tr_xor(from1, to1);
-    tr_xor(from2, to2);
-    int n = to1 - from1;
+void conv_xor(int* l1, int* r1, int* l2, int* r2) {
+    tr_xor(l1, r1);
+    tr_xor(l2, r2);
+    int n = r1 - l1;
     for (int i = 0; i < n; i++) {
-        *(from1 + i) = mult(*(from1 + i), *(from2 + i));
+        *(l1 + i) = mult(*(l1 + i), *(l2 + i));
     }
-    inv_xor(from1, to1);
-    inv_xor(from2, to2);
+    inv_xor(l1, r1);
+    inv_xor(l2, r2);
+}
+
+void tr_or(int* l, int* r) {
+    if (r - l == 1) return;
+    int* m = l + (r - l) / 2;
+    tr_or(l, m);
+    tr_or(m, r);
+    for (int i = 0; i < m - l; i++) {
+        *(m + i) = add(*(m + i), *(l + i));
+    }
+}
+
+void inv_or(int* l, int* r) {
+    if (r - l == 1) return;
+    int* m = l + (r - l) / 2;
+    for (int i = 0; i < m - l; i++) {
+        *(m + i) = sub(*(m + i), *(l + i));
+    }
+    inv_or(l, m);
+    inv_or(m, r);
+}
+
+void conv_or(int* l1, int* r1, int* l2, int* r2) {
+    tr_or(l1, r1);
+    tr_or(l2, r2);
+    int n = r1 - l1;
     for (int i = 0; i < n; i++) {
-        reduce(*(from1 + i));
+        *(l1 + i) = mult(*(l1 + i), *(l2 + i));
     }
+    inv_or(l1, r1);
+    inv_or(l2, r2);
 }
 
-void tr_or(ll *from, ll *to) {
-    if (to - from == 1) return;
-    ll *mid = from + (to - from) / 2;
-    tr_or(from, mid);
-    tr_or(mid, to);
-    for (int i = 0; i < mid - from; i++) {
-        *(mid + i) = add(*(mid + i), *(from + i));
-    }
-}
-
-void inv_or(ll *from, ll *to) {
-    if (to - from == 1) return;
-    ll *mid = from + (to - from) / 2;
-    for (int i = 0; i < mid - from; i++) {
-        *(mid + i) = sub(*(mid + i), *(from + i));
-    }
-    inv_or(from, mid);
-    inv_or(mid, to);
-}
-
-void conv_or(ll *from1, ll *to1, ll *from2, ll *to2) {
-    tr_or(from1, to1);
-    tr_or(from2, to2);
-    int n = to1 - from1;
-    for (int i = 0; i < n; i++) {
-        *(from1 + i) = mult(*(from1 + i), *(from2 + i));
-    }
-    inv_or(from1, to1);
-    inv_or(from2, to2);
-    for (int i = 0; i < n; i++) {
-        reduce(*(from1 + i));
-    }
-}
-
-void conv_and(ll *from1, ll *to1, ll *from2, ll *to2) {
-    int n = to1 - from1;
+void conv_and(int* l1, int* r1, int* l2, int* r2) {
+    int n = r1 - l1;
     int mask = n - 1;
     for (int i = 0; i < n / 2; i++) {
-        swap(*(from1 + i), *(from1 + (i ^ mask)));
-        swap(*(from2 + i), *(from2 + (i ^ mask)));
+        swap(*(l1 + i), *(l1 + (i ^ mask)));
+        swap(*(l2 + i), *(l2 + (i ^ mask)));
     }
-    conv_or(from1, to1, from2, to2);
+    conv_or(l1, r1, l2, r2);
     for (int i = 0; i < n / 2; i++) {
-        swap(*(from1 + i), *(from1 + (i ^ mask)));
-        swap(*(from2 + i), *(from2 + (i ^ mask)));
-    }
-    for (int i = 0; i < n; i++) {
-        reduce(*(from1 + i));
+        swap(*(l1 + i), *(l1 + (i ^ mask)));
+        swap(*(l2 + i), *(l2 + (i ^ mask)));
     }
 }
 
