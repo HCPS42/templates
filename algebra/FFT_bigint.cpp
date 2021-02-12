@@ -6,7 +6,7 @@ using namespace std;
 // multiply numbers up to 10^{50'000}
 // maybe change fft to two ntts and test against lint
 
-const int K = 1 << 20; // check
+const int K = 1 << 20; // ch eck
 const double pi = acos(-1);
 
 typedef complex<double> C;
