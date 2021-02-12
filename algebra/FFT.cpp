@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// https://codeforces.com/problemset/problem/528/D
+
 const int K = 1 << 20; // check
 const double pi = acos(-1);
 
