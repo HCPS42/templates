@@ -3,7 +3,7 @@ using namespace std;
 
 // https://www.spoj.com/problems/VFMUL/
 
-// multiply numbers up to 50'000
+// multiply numbers up to 10^{50'000}
 // maybe change fft to two ntts and test against lint
 
 const int K = 1 << 20; // check
