@@ -2,139 +2,144 @@
 using namespace std;
 
 struct Node {
-    int key;
+    int val;
     int64_t sum;
-    Node *left, *right, *parent;
-    Node(int key, int64_t sum, Node *left, Node *right, Node *parent) : key(key), sum(sum), left(left), right(right), parent(parent) {}
+    Node* l;
+    Node* r;
+    Node* p;
+    Node(int x) {
+        val = x;
+        sum = x;
+        l = r = p = NULL;
+    }
 };
 
-void update(Node *v) {
+void upd(Node* v) {
     if (!v) return;
-    v->sum = v->key + (v->left ? v->left->sum : 0) + (v->right ? v->right->sum : 0);
-    if (v->left) v->left->parent = v;
-    if (v->right) v->right->parent = v;
+    v->sum = v->val + (v->l ? v->l->sum : 0) + (v->r ? v->r->sum : 0);
+    if (v->l) v->l->p = v;
+    if (v->r) v->r->p = v;
 }
 
-void small_rotation(Node *v) {
-    Node* parent = v->parent;
-    if (!parent) return;
-    Node *grandparent = v->parent->parent;
-    if (parent->left == v) {
-        parent->left = v->right;
-        v->right = parent;
+void small_rot(Node* v) {
+    Node* p = v->p;
+    if (!p) return;
+    Node* gp = p->p;
+    if (p->l == v) {
+        p->l = v->r;
+        v->r = p;
     }
     else {
-        parent->right = v->left;
-        v->left = parent;
+        p->r = v->l;
+        v->l = p;
     }
-    update(parent);
-    update(v);
-    v->parent = grandparent;
-    if (grandparent) {
-        if (grandparent->left == parent) grandparent->left = v;
-        else grandparent->right = v;
-    }
-}
-
-void big_rotation(Node *v) {
-    if (v->parent->left == v && v->parent->parent->left == v->parent) {
-        small_rotation(v->parent);
-        small_rotation(v);
-    }
-    else if (v->parent->right == v && v->parent->parent->right == v->parent) {
-        small_rotation(v->parent);
-        small_rotation(v);
-    }
-    else {
-        small_rotation(v);
-        small_rotation(v);
+    upd(p);
+    upd(v);
+    v->p = gp;
+    if (gp) {
+        if (gp->l == p) gp->l = v;
+        else gp->r = v;
     }
 }
 
-void splay(Node *&root, Node *v) {
+void big_rot(Node* v) {
+    if ((v->p->l == v && v->p->p->l == v->p)
+        || (v->p->r == v && v->p->p->r == v->p)) {
+        small_rot(v->p);
+    }
+    else small_rot(v);
+    small_rot(v);
+}
+
+void splay(Node*& root, Node* v) {
     if (!v) return;
-    while (v->parent) {
-        if (!v->parent->parent) {
-            small_rotation(v);
+    while (v->p) {
+        if (!v->p->p) {
+            small_rot(v);
             break;
         }
-        big_rotation(v);
+        big_rot(v);
     }
     root = v;
 }
 
-Node* find(Node *&root, int key) {
-    Node *v = root, *last = root, *next = NULL;
+Node* find(Node*& root, int x) {
+    Node* v = root;
+    Node* last = root;
+    Node* nxt = NULL;
     while (v) {
-        if (v->key >= key && (!next || v->key < next->key)) next = v;
+        if (v->val >= x && (!nxt || v->val < nxt->val)) nxt = v;
         last = v;
-        if (v->key == key) break;
-        if (v->key < key) v = v->right;
-        else v = v->left;
+        if (v->val == x) break;
+        if (v->val < x) v = v->r;
+        else v = v->l;
     }
     splay(root, last);
-    return next;
+    return nxt;
 }
 
-void split(Node *root, int key, Node *&left, Node *&right) {
-    right = find(root, key);
-    splay(root, right);
-    if (!right) {
-        left = root;
+void split(Node* root, int x, Node*& l, Node*& r) {
+    r = find(root, x);
+    splay(root, r);
+    if (!r) {
+        l = root;
         return;
     }
-    left = right->left;
-    right->left = NULL;
-    if (left) left->parent = NULL;
-    update(left);
-    update(right);
+    l = r->l;
+    r->l = NULL;
+    if (l) l->p = NULL;
+    upd(l);
+    upd(r);
 }
 
-Node* merge(Node *left, Node *right) {
-    if (!left) return right;
-    if (!right) return left;
-    Node *min_right = right;
-    while (min_right->left) min_right = min_right->left;
-    splay(right, min_right);
-    right->left = left;
-    update(right);
-    return right;
+Node* merge(Node* l, Node* r) {
+    if (!l) return r;
+    if (!r) return l;
+    Node* mn = r;
+    while (mn->l) mn = mn->l;
+    splay(r, mn);
+    r->l = l;
+    upd(r);
+    return r;
 }
 
-Node *root = NULL;
-
-void insert(int x) {
-    Node *left = NULL, *right = NULL, *new_node = NULL;
-    split(root, x, left, right);
-    if (!right || right->key != x) new_node = new Node(x, x, NULL, NULL, NULL);
-    root = merge(merge(left, new_node), right);
-}
-
-void erase(int x) {
-    Node *left = NULL, *right = NULL;
-    split(root, x, left, right);
-    if (right && right->key == x) {
-        right = right->right;
-        if (right) right->parent = NULL;
+void insert(Node*& root, int x) {
+    Node* l;
+    Node* r;
+    split(root, x, l, r);
+    if (!r || r->val != x) {
+        l = merge(l, new Node(x));
     }
-    root = merge(left, right);
+    root = merge(l, r);
 }
 
-bool find(int x) {
+void erase(Node*& root, int x) {
+    Node* l;
+    Node* r;
+    split(root, x, l, r);
+    if (r && r->val == x) {
+        r = r->r;
+        if (r) r->p = NULL;
+    }
+    root = merge(l, r);
+}
+
+bool count(Node*& root, int x) {
     find(root, x);
-    if (root && root->key == x) return true;
-    return false;
+    if (root && root->val == x) return 1;
+    return 0;
 }
 
-int64_t sum(int l, int r) {
-    //returns the sum of all keys of the splay tree in the range of [l, r]
+int64_t sum(Node*& root, int L, int R) {
     if (!root) return 0;
-    Node *left = NULL, *middle = NULL, *right = NULL;
-    split(root, l, left, middle);
-    split(middle, r + 1, middle, right);
+    Node* l;
+    Node* m;
+    Node* r;
+    split(root, L, l, m);
+    split(m, R + 1, m, r);
     int64_t res = 0;
-    if (middle) res = middle->sum;
-    root = merge(merge(left, middle), right);
+    if (m) res = m->sum;
+    root = merge(merge(l, m), r);
     return res;
 }
 
