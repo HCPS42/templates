@@ -8,7 +8,7 @@ using namespace std;
 
 const int N = 2e5 + 5;
 
-struct Graph {
+struct Cactus {
     vector<pair<int, int>> g[N];
     vector<pair<int, int>> es;
     bool used[N];
