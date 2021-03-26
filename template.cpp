@@ -12,6 +12,7 @@ typedef string str;
 #define stie std::tie
 #define vec vector
 #define	forn(i, l, r) for (int i=l; i<=r; i++)
+#define forb(i, r, l) for (int i=r; i>=l; i--)
 #define emp empty
 #define beg begin
 #define ins insert
