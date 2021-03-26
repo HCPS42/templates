@@ -50,7 +50,8 @@ void out() { cout << "OK" << endl; }
 template<class T> void sort(vector<T>& a) { sort(a.begin(), a.end()); }
 template<class T> void uniq(vector<T>& a) { sort(a); a.erase(unique(a.begin(), a.end()), a.end()); }
 template<class T> vector<T> set_int(vector<T> a, vector<T> b) { sort(a); sort(b); vector<T> res; set_intersection(a.begin(), a.end(), b.begin(), b.end(), back_inserter(res)); return res; }
-clock_t start_time; double get_time() { return (double)(clock() - start_time) / CLOCKS_PER_SEC; }
+clock_t start_time; void start_timer() { start_time = clock(); }
+double get_time() { return (double)(clock() - start_time) / CLOCKS_PER_SEC; }
 #if __SIZEOF_INT128__ >= 16
 typedef __int128 LL;
 istream& operator>>(istream& in, __int128& a) { int64_t b; cin >> b; a = b; return in; }
@@ -69,7 +70,7 @@ int main() {
 #ifdef LOCAL
 	freopen("input.txt", "r", stdin);
 #endif
-	start_time = clock();
+	start_timer();
 	Solve();
 	return 0;
 }
