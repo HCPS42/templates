@@ -72,4 +72,19 @@ struct Vec {
         ou << ")";
         return ou;
     }
+    friend T operator*(const Vec& a, const Vec& b) {
+        T res(0);
+        for (int i = 0; i < a.size(); i++) {
+            res += a[i] * b[i];
+        }
+        return res;
+    }
 };
+
+template <class T>
+ostream& operator<<(ostream& out, const vector<Vec<T>>& a) {
+    for (const Vec<T>& i : a) {
+        out << i << endl;
+    }
+    return out;
+}

@@ -6,54 +6,64 @@
 #include "space.h"
 using namespace std;
 
-int num_of_cells(Mat<frac> A, frac lambda, int size) {
-    int n = A.rows();
-    Mat<frac> I = Mat<frac>::I(n);
+template <class T>
+int num_of_blocks(Mat<T> A, T lambda, int size) {
+    Mat<T> I = Mat<T>::I(A.rows());
     return 2 * kernel((A - lambda * I).pow(size)).dim()
         - kernel((A - lambda * I).pow(size - 1)).dim()
         - kernel((A - lambda * I).pow(size + 1)).dim();
 }
 
-void jordan_form(Mat<frac> A, vector<frac> roots = {}) {
-    //out(char_poly(A));
-    for (frac lambda : roots) {
+template <class T>
+vector<pair<T, int>> Jordan_blocks(Mat<T> A, vector<T> roots = {}) {
+    if (roots.empty()) {
+        roots = find_roots(char_poly(A));
+    }
+    vector<pair<T, int>> blocks;
+    for (T lambda : roots) {
         for (int size = 1; size <= A.rows(); size++) {
-            int num = num_of_cells(A, lambda, size);
-            if (num) {
-                //out(lambda, size, num);
+            int num = num_of_blocks(A, lambda, size);
+            for (int i = 1; i <= num; i++) {
+                blocks.push_back({lambda, size});
             }
         }
     }
+    sort(blocks.begin(), blocks.end());
+    return blocks;
 }
 
-void jordan_decomposition(Mat<frac> A, vector<frac> roots = {}) {
+template <class T>
+pair<Mat<T>, Mat<T>> Jordan_decomposition(Mat<T> A, vector<T> roots = {}) {
     // A = P J P^{-1}
-    Mat<frac> P;
-    for (frac lambda : roots) {
-        Mat<frac> B = A - lambda * Mat<frac>::I(A.rows());
+    if (roots.empty()) {
+        roots = find_roots(char_poly(A));
+    }
+    Mat<T> P;
+    for (T lambda : roots) {
+        Mat<T> B = A - lambda * Mat<T>::I(A.rows());
         int k = 1;
         while (kernel(B.pow(k)).dim() < kernel(B.pow(k + 1)).dim()) {
             k++;
         }
-        vector<vector<Vec<frac>>> table(k + 1);
+        vector<vector<Vec<T>>> table(k + 1);
         for (int i = k; i >= 1; i--) {
-            Space<frac> U = kernel(B.pow(i));
-            Space<frac> W = kernel(B.pow(i - 1));
-            Space<frac> cur = W;
-            for (Vec<frac> x : table[i]) {
+            Space<T> U = kernel(B.pow(i));
+            Space<T> W = kernel(B.pow(i - 1));
+            Space<T> cur = W;
+            for (Vec<T> x : table[i]) {
                 cur.add(x);
             }
-            vector<Vec<frac>> extension;
-            for (Vec<frac> x : U.get_basis()) {
+            vector<Vec<T>> extension;
+            for (Vec<T> x : U.get_basis()) {
                 if (!cur.contains(x)) {
                     cur.add(x);
                     extension.push_back(x);
                 }
             }
-            for (Vec<frac> x : extension) {
+            for (Vec<T> x : extension) {
                 table[i].push_back(x);
             }
-            for (Vec<frac> x : table[i]) {
+            for (Vec<T> x : table[i]) {
                 table[i - 1].push_back((B * x).to_vec());
             }
         }
@@ -65,48 +75,12 @@ void jordan_decomposition(Mat<frac> A, vector<frac> roots = {}) {
         }
     }
     P = P.t();
-    Mat<frac> J = inverse(P) * A * P;
-    //out(P);
-    //out(J);
+    Mat<T> J = inverse(P) * A * P;
     assert(A == P * J * inverse(P));
+    return {P, J};
 }
 
-void task_1() {
-    Mat<frac> A({{7, -4},
-                 {14, -8}});
-    jordan_form(A, {0, -1});
-    Mat<frac> P({{4, 1},
-                 {7, 2}});
-    //out(inverse(P) * A * P);
-    //out(P * Mat<frac>({{0, 0}, {0, 1}}) * inverse(P));
-}
-
-void task_2_a() {
-    Mat<frac> A({{5, -7, -4},
-                 {6, -9, -5},
-                 {-6, 8, 4}});
-    jordan_decomposition(A, {-1, 2});
-}
-
-void task_2_b() {
-    Mat<frac> A({{5, -2, -1},
-                 {9, -4, -3},
-                 {-9, 6, 5}});
-    jordan_decomposition(A, {2});
-}
-
-void task_2_c() {
-    Mat<frac> A({{1, -3, 0, 3},
-                 {-2, -6, 0, 13},
-                 {0, -3, 1, 3},
-                 {-1, -4, 0, 8}});
-    jordan_decomposition(A, {1});
-}
-
-void task_2_d() {
-    Mat<frac> A({{3, -1, 1, -7},
-                 {9, -3, -7, -1},
-                 {0, 0, 4, -8},
-                 {0, 0, 2, -4}});
-    jordan_decomposition(A, {0});
+template <class T>
+Mat<T> Jordan_form(Mat<T> A, vector<T> roots = {}) {
+    return Jordan_decomposition(A, roots).second;
 }

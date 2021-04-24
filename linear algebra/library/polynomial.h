@@ -52,6 +52,15 @@ struct poly {
         }
         return a[i];
     }
+    T operator()(const T& b) const {
+        T res(0);
+        T pow_b(1);
+        for (int i = 0; i <= deg(); i++) {
+            res += a[i] * pow_b;
+            pow_b *= b;
+        }
+        return res;
+    }
     poly& operator+=(const poly& b) {
         while (deg() < b.deg()) {
             a.push_back(T(0));
@@ -174,4 +183,34 @@ ostream& operator<<(ostream& out, const poly<T>& a) {
         }
     }
     return out;
+}
+
+vector<frac> find_roots(const poly<frac>& a) {
+    // find rational roots of a polynomial with integer coefficients
+    for (const frac& i : a.a) {
+        assert(i.y == 1);
+    }
+    vector<frac> roots;
+    for (int i = -20; i <= 20; i++) {
+        for (int j = 1; j <= 20; j++) {
+            frac root(i, j);
+            if (a(root) == 0) {
+                roots.push_back(root);
+            }
+        }
+    }
+    sort(roots.begin(), roots.end());
+    roots.erase(unique(roots.begin(), roots.end()), roots.end());
+    return roots;
+}
+
+template <class T>
+vector<T> find_roots(const poly<T>& a) {
+    // TODO
+    return {};
+}
+
+vector<pair<frac, int>> factorize(const poly<frac>& a) {
+    // TODO
+    return {};    
 }

@@ -10,6 +10,7 @@
 #include "linear_algebraic_algorithms.h"
 #include "space.h"
 #include "Jordan.h"
+#include "Gram-Schmidt.h"
 using namespace std;
 
 typedef long long ll;
@@ -69,59 +70,14 @@ ostream& operator<<(ostream& out, const __int128 a) {
 }
 #endif
 
-template <class T>
-T dot(Vec<T> a, Vec<T> b) {
-    T res = 0;
-    for (int i = 0; i < a.size(); i++) {
-        res += a[i] * b[i];
-    }
-    return res;
-}
-
 /*
 TODO:
-1) write jordan from with templates
+1) polynomial division, factorization
 2) bilinear forms, diagonalization, change of basis
-3) Gram-Schmidt
-4) complement to orthogonal basis
-5) add dot product to vector
 */
-
-// hw 27
-
-void task_2() {
-    // Gram-Schmidt
-    Vec<frac> v1({1, -2, 2, -3});
-    Vec<frac> v2({2, -3, 2, 4});
-    Space<frac> space;
-    space.add(v1);
-    space.add(v2);
-    Space<frac> comp = space.complement();
-    Vec<frac> v3 = comp.a[0];
-    Vec<frac> v4 = comp.a[1];
-    v3 -= dot(v1, v3) / dot(v1, v1) * v1 + dot(v2, v3) / dot(v2, v2) * v2;
-    v4 -= dot(v1, v4) / dot(v1, v1) * v1 + dot(v2, v4) / dot(v2, v2) * v2 + dot(v3, v4) / dot(v4, v4) * v3;
-    out(dot(v1, v3));
-    out(dot(v2, v3));
-    out(dot(v1, v4));
-    out(dot(v2, v4));
-    out(v3);
-    out(v4);
-}
-
-/*
-(  0 /  1)
-(  0 /  1)
-(  0 /  1)
-(  0 /  1)
-(( 163 / 198), ( 29 / 99), (-23 / 99), (- 5 / 66))
-(( 1015 / 19602), ( 4109 / 9801), ( 4627 / 9801), ( 343 / 6534))
-*/
-
-
 
 void Solve() {
-    task_2();
+    
 
 
 
