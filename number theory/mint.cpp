@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-template<int m>
+template <int m>
 struct mint {
     int x = 0;
     mint(int64_t a = 0) { if (a < 0) a = a % m + m; if (a >= m) a %= m; x = a; }
@@ -9,7 +9,6 @@ struct mint {
     friend ostream& operator<<(ostream& out, mint a) { return out << a.x; }
     explicit operator int() const { return x; }
     static int mod_inv(int a, int mod = m) {
-        // https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm#Example
         int g = mod, r = a, z = 0, y = 1;
         while (r != 0) { int q = g / r; g %= r; swap(g, r); z -= q * y; swap(z, y); }
         return z < 0 ? z + mod : z;
@@ -21,14 +20,15 @@ struct mint {
     mint& operator+=(const mint& a) { x += a.x; if (x >= m) x -= m; return *this; }
     mint& operator-=(const mint& a) { x -= a.x; if (x < 0) x += m; return *this; }
     static unsigned fast_mod(uint64_t x, unsigned mod = m) {
-#if !defined(_WIN32) || defined(_WIN64)
-        return x % mod;
-#endif
+#if defined(_WIN32) && !defined(_WIN64)
         // Optimized mod for Codeforces 32-bit machines.
         // x must be less than 2^32 * mod for this to work, so that x / mod fits in a 32-bit integer.
         unsigned x_high = x >> 32, x_low = (unsigned) x; unsigned quot, rem;
         asm("divl %4\n" : "=a" (quot), "=d" (rem) : "d" (x_high), "a" (x_low), "r" (mod));
         return rem;
+#else
+        return x % mod;
+#endif
     }
     mint& operator*=(const mint& a) { x = fast_mod((uint64_t) x * a.x); return *this; }
     mint& operator/=(const mint& a) { return *this *= a.inv(); }
