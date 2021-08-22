@@ -41,11 +41,11 @@ pair<T, T> crt(T ra, T a, T rb, T b) {
 template<class T>
 pair<T, T> CRT(vector<T> r, vector<T> a) {
     int n = a.size();
-    for (int i=0; i<n; i++) {
+    for (int i = 0; i < n; i++) {
         red(r[i], a[i]);
     }
     pair<T, T> res = {0, 1};
-    for (int i=0; i<n; i++) {
+    for (int i = 0; i < n; i++) {
         res = crt(res.fi, res.se, r[i], a[i]);
         if (res.se == 0) {
             return {0, 0};
