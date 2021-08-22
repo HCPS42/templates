@@ -25,7 +25,7 @@ struct lint {
             }
             ptr++;
         }
-        for (int i = b.size() - 1; i >= ptr; i -= base_digits) {
+        for (int i = (int) b.size() - 1; i >= ptr; i -= base_digits) {
             int x = 0;
             for (int j = max(ptr, i - base_digits + 1); j <= i; j++) {
                 x = x * 10 + b[j] - '0';
@@ -68,7 +68,7 @@ struct lint {
     }
     explicit operator int64_t() const {
         int64_t res = 0;
-        for (int i = a.size() - 1; i >= 0; i--) {
+        for (int i = (int) a.size() - 1; i >= 0; i--) {
             res = res * base + a[i];
         }
         return res * sign;
@@ -154,7 +154,7 @@ struct lint {
         lint q;
         lint r;
         q.a.resize(a.a.size());
-        for (int i = a.a.size() - 1; i >= 0; i--) {
+        for (int i = (int) a.a.size() - 1; i >= 0; i--) {
             r *= base;
             r += a.a[i];
             int x = r.a.size() <= b.a.size() ? 0 : r.a[b.a.size()];
@@ -184,7 +184,7 @@ struct lint {
             sign = -sign;
             b = -b;
         }
-        for (int i = a.size() - 1, rem = 0; i >= 0; i--) {
+        for (int i = (int) a.size() - 1, rem = 0; i >= 0; i--) {
             int64_t cur = a[i] + rem * (int64_t) base;
             a[i] = cur / b;
             rem = cur % b;
@@ -199,7 +199,7 @@ struct lint {
     int operator%(int b) const {
         if (b < 0) b = -b;
         int res = 0;
-        for (int i = a.size() - 1; i >= 0; i--) {
+        for (int i = (int) a.size() - 1; i >= 0; i--) {
             res = (a[i] + res * (int64_t) base) % b;
         }
         return res * sign;
@@ -223,7 +223,7 @@ struct lint {
         if (a.size() != b.a.size()) {
             return a.size() * sign < b.a.size() * b.sign;
         }
-        for (int i = a.size() - 1; i >= 0; i--) {
+        for (int i = (int) a.size() - 1; i >= 0; i--) {
             if (a[i] != b.a[i]) {
                 return a[i] * sign < b.a[i] * sign;
             }
@@ -354,7 +354,7 @@ struct lint {
     }
     int size() const {
         if (a.empty()) return 0;
-        int res = (a.size() - 1) * base_digits;
+        int res = ((int) a.size() - 1) * base_digits;
         int b = a.back();
         while (b) {
             res++;
