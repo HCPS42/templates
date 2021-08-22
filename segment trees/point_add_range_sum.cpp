@@ -5,7 +5,7 @@ typedef long long ll;
 
 const int N = 1e6 + 5;
 
-struct basic_seg_tree {
+struct seg_tree {
     static const int K = 1 << int(ceil(log2(N)));
     ll t[2 * K];
     void upd(int v, ll x) {
