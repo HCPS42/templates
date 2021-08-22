@@ -49,8 +49,6 @@ struct Fenwick_2D {
     }
 };
 
-Fenwick_2D t;
-
 int main() {
     return 0;
 }
