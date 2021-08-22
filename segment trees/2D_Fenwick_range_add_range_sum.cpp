@@ -3,8 +3,9 @@ using namespace std;
 
 typedef long long ll;
 
+const int N = 1005;
+
 struct Fenwick_2D {
-    static const int N = 1005;
     ll t[4][N][N];
     void add(int tp, int x, int y, ll d) {
         // (i, j) += d in array #tp
