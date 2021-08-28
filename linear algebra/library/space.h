@@ -22,7 +22,7 @@ struct Space {
         a = b;
         reduce();
     }
-    Space(const Mat<T>& b) {
+    Space(Mat<T> b) {
         gauss(b);
         a = b.a;
     }
