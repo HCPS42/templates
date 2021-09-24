@@ -82,5 +82,5 @@ int main() {
         ans = inv[ans];
         cout << ans << "\n";
     }
-	return 0;
+    return 0;
 }
