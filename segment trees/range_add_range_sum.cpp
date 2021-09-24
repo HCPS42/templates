@@ -16,8 +16,8 @@ struct seg_tree {
         if (!ch[v]) return;
         t[v] += ch[v] * (r - l + 1); // r - l + 1 for sum and 1 for min/max
         if (l < r) {
-            ch[v+v] += ch[v];
-            ch[v+v+1] += ch[v];
+            ch[v + v] += ch[v];
+            ch[v + v + 1] += ch[v];
         }
         ch[v] = 0;
     }
