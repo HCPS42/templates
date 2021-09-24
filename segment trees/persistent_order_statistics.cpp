@@ -66,8 +66,8 @@ void compress(int n) {
 }
 
 int main() {
-	int n, T;
-	cin >> n >> T;
+    int n, T;
+    cin >> n >> T;
     for (int i = 1; i <= n; i++) {
         cin >> a[i];
     }
