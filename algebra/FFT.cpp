@@ -20,7 +20,7 @@ void init() {
     }
 }
 
-template<typename T>
+template <typename T>
 void fft(T* in, C* out, int n, int k = 1) {
     if (n == 1) {
         *out = *in;
