@@ -7,7 +7,7 @@ using namespace std;
 typedef long long ll;
 
 const int N = 2105;
-const ll inf = 8e18;
+const ll inf = 4e18;
 
 struct Edge {
     int s;
