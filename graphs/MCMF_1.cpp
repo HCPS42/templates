@@ -98,6 +98,7 @@ pair<ll, ll> min_cost_max_flow(int src, int sink, ll bound = inf) {
             phi[i] += dis[i];
         }
         ll f = bound - flow;
+        if (!f) break;
         int v = sink;
         while (v != src) {
             Edge& e = edges[par[v]];
