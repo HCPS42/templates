@@ -15,12 +15,14 @@ ll cross(point a, point b) {
 }
 
 struct CHT {
-    vector<point> hull, vecs;
+    vector<point> hull;
+    vector<point> vecs;
     void clear() {
         hull.clear();
         vecs.clear();
     }
     void add(ll k, ll b) {
+        // add in sorted order
         point nw = {k, b};
         while (!vecs.empty() && dot(vecs.back(), nw - hull.back()) < 0) {
             hull.pop_back();
@@ -31,7 +33,7 @@ struct CHT {
         }
         hull.push_back(nw);
     }
-    ll get(ll x) {
+    ll get_min(ll x) {
         point query = {x, 1};
         auto it = lower_bound(vecs.begin(), vecs.end(), query, [](point a, point b) {
             return cross(a, b) > 0;
