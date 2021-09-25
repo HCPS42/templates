@@ -2,6 +2,7 @@
 using namespace std;
 
 // https://codeforces.com/contest/1510/problem/B
+// https://official.contest.yandex.com/ptz-summer-2020/contest/19423/problems/E3
 
 typedef long long ll;
 
