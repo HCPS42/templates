@@ -12,22 +12,18 @@ struct Treap {
     int R[K];
     int cnt[K];
     int val[K];
-
     void clear() {
         sz = 1;
     }
-
     bool cmp(int u, int v) {
         return rand() * 1ll * (cnt[u] + cnt[v]) < cnt[u] * 1ll * RAND_MAX;
     }
-
     int make(int v) {
         L[sz] = R[sz] = 0;
         cnt[sz] = 1;
         val[sz] = v;
         return sz++;
     }
-
     int copy(int v) {
         if (!v) return 0;
         L[sz] = L[v];
@@ -36,13 +32,11 @@ struct Treap {
         val[sz] = val[v];
         return sz++;
     }
-
     void push(int v) {
         cnt[v] = 1;
         if (L[v]) cnt[v] += cnt[L[v]];
         if (R[v]) cnt[v] += cnt[R[v]];
     }
-
     void merge(int& v, int l, int r) {
         if (!l || !r) {
             v = 0;
@@ -60,7 +54,6 @@ struct Treap {
             push(v);
         }
     }
-
     void split(int v, int& l, int& r, int k) {
         if (!k) {
             l = 0;
@@ -78,7 +71,6 @@ struct Treap {
             push(l);
         }
     }
-
     void build(vector<int>& a, int& v, int l, int r) {
         int m = (l + r) / 2;
         v = make(a[m]);
@@ -86,26 +78,22 @@ struct Treap {
         if (m < r) build(a, R[v], m + 1, r);
         push(v);
     }
-
     int build(vector<int>& a) {
         if (a.empty()) return 0;
         int v = 0;
         build(a, v, 0, a.size() - 1);
         return v;
     }
-
     void get(int v, vector<int>& a) {
         if (L[v]) get(L[v], a);
         a.push_back(val[v]);
         if (R[v]) get(R[v], a);
     }
-
     vector<int> get(int v) {
         vector<int> a;
         get(v, a);
         return a;
     }
-
     int rebuild(int v) {
         vector<int> a = get(v);
         clear();
