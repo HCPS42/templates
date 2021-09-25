@@ -16,6 +16,7 @@ struct CHT {
         return (B[l3] - B[l1]) * (K[l1] - K[l2]) < (B[l2] - B[l1]) * (K[l1] - K[l3]);
     }
     void add(ll k, ll b) {
+        // add in sorted order
         if (!K.empty() && K.back() == k) return;
         K.push_back(k);
         B.push_back(b);
