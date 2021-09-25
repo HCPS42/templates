@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// task: https://official.contest.yandex.com/mw2020prefinals/contest/18101/problems/G5b/
+// https://official.contest.yandex.com/mw2020prefinals/contest/18101/problems/G5b/
 
 const int N = 1e5 + 5;
 const int log_N = 50;
