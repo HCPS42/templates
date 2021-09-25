@@ -3,7 +3,7 @@ using namespace std;
 
 const int N = 2e4 + 5;
 
-vector<pair<int,int>> g[N];
+vector<pair<int, int>> g[N];
 bool used[N];
 int tin[N];
 int dp[N];
