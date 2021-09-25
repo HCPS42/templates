@@ -4,7 +4,8 @@ using namespace std;
 // task: https://official.contest.yandex.com/mw2020prefinals/contest/18101/problems/G5b/
 
 const int N = 1e5 + 5;
-const int K = 50 * N;
+const int log_N = 50;
+const int K = N * log_N;
 
 struct Treap {
     int sz = 1;
