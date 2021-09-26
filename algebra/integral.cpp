@@ -9,8 +9,8 @@ Real f(Real x) {
     
 }
 
-Real simpson(Real a, Real b) {
-    return Real(1) / Real(6) * (b - a) * (f(a) + Real(4) * f((a + b) / Real(2)) + f(b));
+Real simpson(Real l, Real r) {
+    return Real(1) / Real(6) * (r - l) * (f(l) + Real(4) * f((l + r) / Real(2)) + f(r));
 }
 
 Real integral(Real l, Real r) {
