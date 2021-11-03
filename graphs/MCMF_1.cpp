@@ -3,9 +3,10 @@ using namespace std;
 
 // https://codeforces.com/contest/1510/problem/B
 // https://official.contest.yandex.com/ptz-summer-2020/contest/19423/problems/E3
+// good tests https://codeforces.com/gym/103371/problem/L
 
 // supports negative costs: yes
-// supports negative cycles: I don't know
+// supports negative cycles: no
 
 typedef long long ll;
 
