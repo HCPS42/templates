@@ -1,3 +1,9 @@
+//#pragma GCC optimize("O3")
+//#pragma GCC optimize("unroll-loops")
+//#pragma GCC target("avx2") // doesn't work on Yandex
+//#pragma GCC target("avx") // for old judges
+//#pragma GCC target("bmi,bmi2,lzcnt,popcnt") // fast bit operations
+
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
@@ -59,19 +65,31 @@ set_intersection(a.begin(), a.end(), b.begin(), b.end(), back_inserter(res)); re
 clock_t start_time; void start_timer() { start_time = clock(); }
 double get_time() { return (double)(clock() - start_time) / CLOCKS_PER_SEC; }
 template <class T> using min_pque = priority_queue<T, vector<T>, greater<T>>;
+void check_pragmas() { assert(__builtin_cpu_supports("avx2")); }
 
-// solve the problem or die trying
 // do something, stay focused
 // look for stupid bugs
 // guess, slow, stress
-// the solution is always simple
 // don't overgeneralize
+// don't rush
+
+// 1. Understand the problem
+// 2. Devise a plan
+// 3. Carry out the plan
+// 4. Look back
+
+// don't waste time on standings
+
+// SOLVE THE PROBLEM OR DIE TRYING
+// THE SOLUTION IS ALWAYS SIMPLE
+// THE CODE IS ALWAYS SHORT
 
 void Solve() {
-    
+	
 }
 
 int main() {
+	//check_pragmas();
     ios_base::sync_with_stdio(0); cin.tie(0);
 #ifdef LOCAL
     freopen("input.txt", "r", stdin);
