@@ -17,6 +17,9 @@
 #include <tuple>
 #include <utility>
 #include <bitset>
+#include <array>
+#include <stack>
+#include <sstream>
 using namespace std;
 typedef long long ll;
 typedef long double ld;
@@ -47,47 +50,36 @@ typedef string str;
 #define ass assign
 #define lowb lower_bound
 #define uppb upper_bound
+#define oper operator
+#define fri friend
+#define tem template
+#define temt tem <class T>
+#define temtv temt void
 
-#if __SIZEOF_INT128__ >= 16
-typedef __int128 LL;
-istream& operator>>(istream& in, __int128& a) { int64_t b; in >> b; a = b; return in; }
-ostream& operator<<(ostream& out, const __int128 a) {
-    unsigned __int128 b = a < 0 ? -a : a; char buf[128]; char* c = end(buf); do { --c; *c = "0123456789"[b % 10]; b /= 10; } while (b);
-    if (a < 0) { --c; *c = '-'; } int64_t len = end(buf) - c; out.rdbuf()->sputn(c, len); return out;
+temtv mini(T& a, T b) { a = min(a, b); }
+temtv maxi(T& a, T b) { a = max(a, b); }
+temt T gcd(T a, T b) { return b == 0 ? a : gcd(b, a % b); }
+tem <class T1, class T2>
+ostream& operator<<(ostream& os, pair<T1, T2> con& a) {
+    return os << "[" << a.fi << ", " << a.se << "]";
 }
-#endif
-template <class T> void mini(T& a, T b) { a = min(a, b); }
-template <class T> void maxi(T& a, T b) { a = max(a, b); }
-template <class T> T gcd(T a, T b) { return b == 0 ? a : gcd(b, a % b); }
-template <class T1, class T2>
-ostream& operator<<(ostream& os, pair<T1, T2> const& a) { return os << "[" << a.first << ", " << a.second << "]"; }
-template <class Ch, class Tr, class Container>
-basic_ostream<Ch, Tr>& operator<<(basic_ostream<Ch, Tr>& os, Container const& a) { os << "{ "; for (auto& i : a) os << i << " "; return os << "}"; }
-template <class T> void out(T a) { cout << a << endl; }
-template <class T, class... Args> void out(T a, Args... args) { cout << a << " "; out(args...); }
-template <class T> void out(std::initializer_list<T> a) { for (auto i : a) { cout << i << " "; } cout << endl; }
-template <class T> void out(vector<vector<T>> a) { for (vector<T> i : a) out(i); }
-template <class T> void out_(T a[], int l, int r) { for (int i = l; i <= r; i++) cout << a[i] << " "; cout << endl; }
+tem <class Ch, class Tr, class Container>
+basic_ostream<Ch, Tr>& operator<<(basic_ostream<Ch, Tr>& os, Container con& a) {
+    os << "{ "; for (auto& i : a) os << i << " "; return os << "}";
+}
+temtv out(T a) { cout << a << endl; }
+tem <class T, class... Args> void out(T a, Args... b) { cout << a << " "; out(b...); }
+temtv out(vec<vec<T>> a) { for (vec<T> i : a) out(i); }
+temtv out_(T a[], int l, int r) { forn(i, l, r) cout << a[i] << " "; cout << endl; }
 void out() { cout << "OK" << endl; }
-template <class T> void sort(vector<T>& a) { sort(a.begin(), a.end()); }
-template <class T> void rever(vector<T>& a) { reverse(a.begin(), a.end()); }
-template <class T> void uniq(vector<T>& a) { sort(a); a.erase(unique(a.begin(), a.end()), a.end()); }
-template <class T> vector<T> set_int(vector<T> a, vector<T> b) { sort(a); sort(b); vector<T> res;
-set_intersection(a.begin(), a.end(), b.begin(), b.end(), back_inserter(res)); return res; }
+temtv sort(vec<T>& a) { sort(a.beg(), a.end()); }
+temtv rever(vec<T>& a) { reverse(a.beg(), a.end()); }
+temtv uniq(vec<T>& a) { sort(a); a.era(unique(a.beg(), a.end()), a.end()); }
 clock_t start_time; void start_timer() { start_time = clock(); }
 double get_time() { return (double)(clock() - start_time) / CLOCKS_PER_SEC; }
-template <class T> using min_pque = priority_queue<T, vector<T>, greater<T>>;
+temt using min_pque = priority_queue<T, vec<T>, greater<T>>;
 
-// solve the problem or die trying
-// do something, stay focused
-// look for stupid bugs
-// guess, slow, stress
-// the solution is always simple
-// don't overgeneralize
-
-void Solve() {
-    
-}
+void Solve();
 
 int main() {
     ios_base::sync_with_stdio(0); cin.tie(0);
@@ -97,4 +89,25 @@ int main() {
     start_timer();
     Solve();
     return 0;
+}
+
+// do something, stay focused
+// look for stupid bugs
+// guess, slow, stress
+// don't overgeneralize
+// don't rush
+
+// 1. Understand the problem
+// 2. Devise a plan
+// 3. Carry out the plan
+// 4. Look back
+
+// don't waste time on standings
+
+// SOLVE THE PROBLEM OR DIE TRYING
+// THE SOLUTION IS ALWAYS SIMPLE
+// THE CODE IS ALWAYS SHORT
+
+void Solve() {
+    
 }
