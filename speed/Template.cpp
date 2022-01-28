@@ -40,11 +40,11 @@ temtv maxi(T& a, T b) { a = max(a, b); }
 temt T gcd(T a, T b) { return b == 0 ? a : gcd(b, a % b); }
 tem <class T1, class T2>
 ostream& operator<<(ostream& os, pair<T1, T2> con& a) {
-	return os << "[" << a.fi << ", " << a.se << "]";
+    return os << "[" << a.fi << ", " << a.se << "]";
 }
 tem <class Ch, class Tr, class Container>
 basic_ostream<Ch, Tr>& operator<<(basic_ostream<Ch, Tr>& os, Container con& a) {
-	os << "{ "; for (auto& i : a) os << i << " "; return os << "}";
+    os << "{ "; for (auto& i : a) os << i << " "; return os << "}";
 }
 temtv out(T a) { cout << a << endl; }
 tem <class T, class... Args> void out(T a, Args... b) { cout << a << " "; out(b...); }
@@ -57,6 +57,18 @@ temtv uniq(vec<T>& a) { sort(a); a.era(unique(a.beg(), a.end()), a.end()); }
 clock_t start_time; void start_timer() { start_time = clock(); }
 double get_time() { return (double)(clock() - start_time) / CLOCKS_PER_SEC; }
 temt using min_pque = priority_queue<T, vec<T>, greater<T>>;
+
+void Solve();
+
+int main() {
+    ios_base::sync_with_stdio(0); cin.tie(0);
+#ifdef LOCAL
+    freopen("input.txt", "r", stdin);
+#endif
+    start_timer();
+    Solve();
+    return 0;
+}
 
 // do something, stay focused
 // look for stupid bugs
@@ -76,15 +88,5 @@ temt using min_pque = priority_queue<T, vec<T>, greater<T>>;
 // THE CODE IS ALWAYS SHORT
 
 void Solve() {
-	
-}
-
-int main() {
-    ios_base::sync_with_stdio(0); cin.tie(0);
-#ifdef LOCAL
-    freopen("input.txt", "r", stdin);
-#endif
-    start_timer();
-    Solve();
-    return 0;
+    
 }
