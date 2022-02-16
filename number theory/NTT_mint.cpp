@@ -44,16 +44,22 @@ struct mint {
     bool operator!=(const mint& a) const { return x != a.x; }
 };
 
-const int p = 998244353; // 985661441
+const int mod = 998244353; // 985661441
 const int K = 1 << 20; // be careful
-const mint<p> root = binpow(mint<p>(3), (p - 1) / K); // 3 is a primitive root mod p
+const mint<mod> root = binpow(mint<mod>(3), (mod - 1) / K); 
+// 3 is a primitive root modulo mod
 
-typedef vector<mint<p>> poly;
+typedef vector<mint<mod>> poly;
 
-mint<p> prec_w[K / 2];
-mint<p> w[K];
+mint<mod> prec_w[K / 2];
+mint<mod> w[K];
 
+bool initialized = 0;
 void init() {
+	if (initialized) {
+		return;
+	}
+	initialized = 1;
     prec_w[0] = 1;
     for (int i = 1; i < K / 2; i++) {
         prec_w[i] = prec_w[i - 1] * root;
@@ -65,7 +71,7 @@ void init() {
     }
 }
 
-void fft(mint<p>* in, mint<p>* out, int n, int k = 1) {
+void fft(mint<mod>* in, mint<mod>* out, int n, int k = 1) {
     if (n == 1) {
         *out = *in;
         return;
@@ -74,7 +80,7 @@ void fft(mint<p>* in, mint<p>* out, int n, int k = 1) {
     fft(in, out, n, 2 * k);
     fft(in + k, out + n, n, 2 * k);
     for (int i = 0; i < n; i++) {
-        mint<p> t = out[i + n] * w[i + n];
+        mint<mod> t = out[i + n] * w[i + n];
         out[i + n] = out[i] - t;
         out[i] += t;
     }
@@ -107,6 +113,7 @@ poly inter(poly a) {
 }
 
 poly mult(poly a, poly b) {
+	init();
     align(a, b);
     a = eval(a);
     b = eval(b);
@@ -118,6 +125,5 @@ poly mult(poly a, poly b) {
 }
 
 int main() {
-    init();
     return 0;
 }
