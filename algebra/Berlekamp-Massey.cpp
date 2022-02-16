@@ -50,100 +50,100 @@ const int mod = 998244353;
 
 // https://codeforces.com/blog/entry/61306
 namespace LinearRecurrence {
-	const int K = 230'000;
-	vector<mint<mod>> BerlekampMassey(vector<mint<mod>> x) {
-		vector<mint<mod>> ls;
-		vector<mint<mod>> cur;
-		int lf;
-		mint<mod> ld;
-		for (int i = 0; i < x.size(); i++) {
-			mint<mod> t = 0;
-			for (int j = 0; j < cur.size(); j++) {
-				t += x[i - j - 1] * cur[j];
-			}
-			if (t == x[i]) continue;
-			if (cur.empty()) {
-				cur.resize(i + 1);
-				lf = i;
-				ld = t - x[i];
-				continue;
-			}
-			mint<mod> k = -(x[i] - t) / ld;
-			vector<mint<mod>> c(i - lf - 1);
-			c.push_back(k);
-			for (int j = 0; j < ls.size(); j++) {
-				c.push_back(-ls[j] * k);
-			}
-			if (c.size() < cur.size()) {
-				c.resize(cur.size());
-			}
-			for (int j = 0; j < cur.size(); j++) {
-				c[j] += cur[j];
-			}
-			if (i - lf + ls.size() >= cur.size()) {
-				ls = cur;
-				lf = i;
-				ld = t - x[i];
-			}
-			cur = c;
-		}
-		return cur;
-	}
-	int m;
-	mint<mod> a[K];
-	mint<mod> h[K];
-	mint<mod> t_[K];
-	mint<mod> s[K];
-	mint<mod> t[K];
-	void mult(mint<mod>* p, mint<mod>* q) {
-		for (int i = 0; i < m + m; i++) {
-			t_[i] = 0;
-		}
-		for (int i = 0; i < m; i++) {
-			if (p[i] == 0) continue;
-			for (int j = 0; j < m; j++) {
-				t_[i + j] += p[i] * q[j];
-			}
-		}
-		for (int i = m + m - 1; i >= m; i--) {
-			if (t_[i] == 0) continue;
-			for (int j = m - 1; ~j; j--) {
-				t_[i - j - 1] += t_[i] * h[j];
-			}
-		}
-		for (int i = 0; i < m; i++) {
-			p[i] = t_[i];
-		}
-	}
-	mint<mod> calc(int64_t k) {
-		for (int i = m; ~i; i--) {
-			s[i] = t[i] = 0;
-		}
-		s[0] = 1;
-		if (m != 1) t[1] = 1;
-		else t[0] = h[0];
-		while(k) {
-			if (k & 1) mult(s, t);
-			mult(t, t);
-			k >>= 1;
-		}
-		mint<mod> res = 0;
-		for (int i = 0; i < m; i++) {
-			res += s[i] * a[i];
-		}
-		return res;
-	}
-	mint<mod> find_kth(vector<mint<mod>> x, int64_t k) {
-		if (k < x.size()) return x[k];
-		vector<mint<mod>> v = BerlekampMassey(x);
-		m = v.size();
-		if (!m) return 0;
-		for (int i = 0; i < m; i++) {
-			h[i] = v[i];
-			a[i] = x[i];
-		}
-		return calc(k);
-	}
+    const int K = 230'000;
+    vector<mint<mod>> BerlekampMassey(vector<mint<mod>> x) {
+        vector<mint<mod>> ls;
+        vector<mint<mod>> cur;
+        int lf;
+        mint<mod> ld;
+        for (int i = 0; i < x.size(); i++) {
+            mint<mod> t = 0;
+            for (int j = 0; j < cur.size(); j++) {
+                t += x[i - j - 1] * cur[j];
+            }
+            if (t == x[i]) continue;
+            if (cur.empty()) {
+                cur.resize(i + 1);
+                lf = i;
+                ld = t - x[i];
+                continue;
+            }
+            mint<mod> k = -(x[i] - t) / ld;
+            vector<mint<mod>> c(i - lf - 1);
+            c.push_back(k);
+            for (int j = 0; j < ls.size(); j++) {
+                c.push_back(-ls[j] * k);
+            }
+            if (c.size() < cur.size()) {
+                c.resize(cur.size());
+            }
+            for (int j = 0; j < cur.size(); j++) {
+                c[j] += cur[j];
+            }
+            if (i - lf + ls.size() >= cur.size()) {
+                ls = cur;
+                lf = i;
+                ld = t - x[i];
+            }
+            cur = c;
+        }
+        return cur;
+    }
+    int m;
+    mint<mod> a[K];
+    mint<mod> h[K];
+    mint<mod> t_[K];
+    mint<mod> s[K];
+    mint<mod> t[K];
+    void mult(mint<mod>* p, mint<mod>* q) {
+        for (int i = 0; i < m + m; i++) {
+            t_[i] = 0;
+        }
+        for (int i = 0; i < m; i++) {
+            if (p[i] == 0) continue;
+            for (int j = 0; j < m; j++) {
+                t_[i + j] += p[i] * q[j];
+            }
+        }
+        for (int i = m + m - 1; i >= m; i--) {
+            if (t_[i] == 0) continue;
+            for (int j = m - 1; ~j; j--) {
+                t_[i - j - 1] += t_[i] * h[j];
+            }
+        }
+        for (int i = 0; i < m; i++) {
+            p[i] = t_[i];
+        }
+    }
+    mint<mod> calc(int64_t k) {
+        for (int i = m; ~i; i--) {
+            s[i] = t[i] = 0;
+        }
+        s[0] = 1;
+        if (m != 1) t[1] = 1;
+        else t[0] = h[0];
+        while(k) {
+            if (k & 1) mult(s, t);
+            mult(t, t);
+            k >>= 1;
+        }
+        mint<mod> res = 0;
+        for (int i = 0; i < m; i++) {
+            res += s[i] * a[i];
+        }
+        return res;
+    }
+    mint<mod> find_kth(vector<mint<mod>> x, int64_t k) {
+        if (k < x.size()) return x[k];
+        vector<mint<mod>> v = BerlekampMassey(x);
+        m = v.size();
+        if (!m) return 0;
+        for (int i = 0; i < m; i++) {
+            h[i] = v[i];
+            a[i] = x[i];
+        }
+        return calc(k);
+    }
 }
 
 using LinearRecurrence::BerlekampMassey;
