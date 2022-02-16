@@ -12,7 +12,12 @@ typedef vector<int64_t> poly;
 
 C w[K];
 
+bool initialized = 0;
 void init() {
+	if (initialized) {
+		return;
+	}
+	initialized = 1;
     for (int i = 1; i < K; i *= 2) {
         for (int j = 0; j < i; j++) {
             w[i + j] = polar(1.0, pi * j / i);
@@ -64,6 +69,7 @@ poly inter(poly_C a) {
 }
 
 poly mult(poly a, poly b) {
+	init();
     align(a, b);
     poly_C A = eval(a);
     poly_C B = eval(b);
@@ -74,6 +80,5 @@ poly mult(poly a, poly b) {
 }
 
 int main() {
-    init();
     return 0;
 }
