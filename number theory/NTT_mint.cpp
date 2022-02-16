@@ -56,10 +56,10 @@ mint<mod> w[K];
 
 bool initialized = 0;
 void init() {
-	if (initialized) {
-		return;
-	}
-	initialized = 1;
+    if (initialized) {
+        return;
+    }
+    initialized = 1;
     prec_w[0] = 1;
     for (int i = 1; i < K / 2; i++) {
         prec_w[i] = prec_w[i - 1] * root;
@@ -113,7 +113,7 @@ poly inter(poly a) {
 }
 
 poly mult(poly a, poly b) {
-	init();
+    init();
     align(a, b);
     a = eval(a);
     b = eval(b);
