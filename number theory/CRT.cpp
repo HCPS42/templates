@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// https://codeforces.com/gym/102155/problem/F
+
 template<class T>
 void red(T& r, T a) {
     r = ((r % a) + a) % a;
