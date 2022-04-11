@@ -63,7 +63,8 @@ void Solve();
 int main() {
     ios_base::sync_with_stdio(0); cin.tie(0);
 #ifdef LOCAL
-    freopen("input.txt", "r", stdin);
+    auto input_file = freopen("input.txt", "r", stdin);
+    assert(input_file);
 #endif
     start_timer();
     Solve();
@@ -88,5 +89,5 @@ int main() {
 // THE CODE IS ALWAYS SHORT
 
 void Solve() {
-    
+
 }
