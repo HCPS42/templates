@@ -65,45 +65,24 @@ struct Point {
     friend T dist2(const Point& a, const Point& b) { return (a - b).norm2(); }
     friend Real dist(const Point& a, const Point& b) { return (a - b).norm(); }
     Real angle() { return atan2(y, x); }
-    void rotate_self(Real ang);
-    Point rotate(Real ang) const;
+    void rotate_self(Real ang) {
+        if constexpr (std::is_same<Int, T>()) {
+            Real c = cos(ang); Real s = sin(ang);
+            Real nx = c * x - s * y; Real ny = s * x + c * y;
+            x = round(nx); y = round(ny);
+        }
+        else if constexpr (std::is_same<Real, T>()) {
+            Real c = cos(ang); Real s = sin(ang);
+            Real nx = c * x - s * y; Real ny = s * x + c * y;
+            x = nx; y = ny;
+        }
+        else {
+            assert(0);
+        }
+    }
+    Point rotate(Real ang) const {
+        Point<T> a(*this);
+        a.rotate_self(ang);
+        return a;
+    }
 };
-
-template <>
-void Point<Int>::rotate_self(Real ang) {
-    Real c = cos(ang); Real s = sin(ang);
-    Real nx = c * x - s * y; Real ny = s * x + c * y;
-    x = round(nx); y = round(ny);
-}
-
-template <>
-Point<Int> Point<Int>::rotate(Real ang) const {
-    Point<Int> a(*this);
-    a.rotate_self(ang);
-    return a;
-}
-
-template <>
-void Point<Real>::rotate_self(Real ang) {
-    Real c = cos(ang); Real s = sin(ang);
-    Real nx = c * x - s * y; Real ny = s * x + c * y;
-    x = nx; y = ny;
-}
-
-template <>
-Point<Real> Point<Real>::rotate(Real ang) const {
-    Point<Real> a(*this);
-    a.rotate_self(ang);
-    return a;
-}
-
-template <>
-void Point<frac>::rotate_self(Real ang) {
-    assert(0);
-}
-
-template <>
-Point<frac> Point<frac>::rotate(Real ang) const {
-    assert(0);
-    return {};
-}
