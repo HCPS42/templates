@@ -94,7 +94,7 @@ vector<Point<T>> tangents_point_circle(Point<T> p, Circle<T> c) {
     if (is_eq(d, c.r)) return {p};
     Real from_cent = (p - c.center).angle();
     Real ang_dev = acos(c.r / d);
-    return {c.rotate_rightmost(from_cent - ang_dev), c.rotate_rightmost(from_cent + ang_dev)}
+    return {c.rotate_rightmost(from_cent - ang_dev), c.rotate_rightmost(from_cent + ang_dev)};
 }
 
 template <class T>
