@@ -5,7 +5,7 @@
 typedef int64_t Int;
 typedef long double Real;
 
-const Real eps = 1e-8;
+const Real eps = 1e-10;
 const Real pi = acos(-1);
 
 template <class T> T sq(T a) { return a * a; }
@@ -43,15 +43,17 @@ struct Point {
     friend Point operator*(Point a, const T& b) { return a *= b; }
     friend Point operator*(const T& a, Point b) { return b *= a; }
     friend Point operator/(Point a, const T& b) { return a /= b; }
-    bool is_zero() const { return zero<T>(x) && zero<T>(y); }
+    bool is_zero() const { return zero(x) && zero(y); }
     bool operator==(const Point& a) const { return (*this - a).is_zero(); }
     bool operator!=(const Point& a) const { return !(*this == a); }
     friend bool operator<(const Point& a, const Point& b) {
-		if (a.x != b.x) return a.x < b.x; return a.y < b.y;
+        if (!is_eq(a.x, b.x)) return a.x < b.x; return a.y < b.y;
     }
     friend bool operator>(const Point& a, const Point& b) {
-        if (a.x != b.x) return a.x > b.x; return a.y > b.y;
+        if (!is_eq(a.x, b.x)) return a.x > b.x; return a.y > b.y;
     }
+    friend bool operator<=(const Point& a, const Point& b) { return !(a > b); }
+    friend bool operator>=(const Point& a, const Point& b) { return !(a < b); }
     friend T dot(const Point& a, const Point& b) { return a.x * b.x + a.y * b.y; }
     friend T dot(const Point& a, const Point& b, const Point& c) { return dot(b - a, c - a); }
     friend T cross(const Point& a, const Point& b) { return a.x * b.y - a.y * b.x; }
