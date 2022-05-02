@@ -3,6 +3,7 @@ using namespace std;
 
 // seg_tree<int, EQ, SUM> https://codeforces.com/contest/1641/problem/C
 // seg_tree<int, EQ, MIN> https://codeforces.com/contest/1641/problem/C
+// seg_tree<ll, ADD_EQ, MIN> https://codeforces.com/contest/1110/problem/F
 
 const int N = 2e5 + 5;
 
