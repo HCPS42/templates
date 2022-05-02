@@ -32,9 +32,9 @@ void dfs_lca(int v = 1, int p = 1) {
     }
     for (auto [u, w] : g[v]) {
         if (u != p) {
-			dep[u] = dep[v] + w;
-			dfs_lca(u, v);
-		}
+            dep[u] = dep[v] + w;
+            dfs_lca(u, v);
+        }
     }
     tout[v] = timer - 1;
 }
@@ -53,7 +53,7 @@ int lca(int u, int v) {
 }
  
 ll dis(int u, int v) {
-	return dep[u] + dep[v] - 2 * dep[lca(u, v)];
+    return dep[u] + dep[v] - 2 * dep[lca(u, v)];
 }
  
 void calc_sz(int v, int p = 0) {
@@ -94,7 +94,7 @@ void calc_sub(int v, int p, ll d, int cen, int kid) {
 }
  
 void cen_dec() {
-	dfs_lca();
+    dfs_lca();
     queue<int> q;
     q.push(get_cen(1));
     while (!q.empty()) {
@@ -118,22 +118,22 @@ void cen_dec() {
 }
  
 int calc_vec(vector<ll>& a, ll d) {
-	return upper_bound(a.begin(), a.end(), d) - a.begin();
+    return upper_bound(a.begin(), a.end(), d) - a.begin();
 }
  
 int calc_ball(int s, ll mx) {
-	int kid = 0;
-	int v = s;
-	int res = 0;
-	while (v) {
-		ll d = mx - dis(s, v);
-		if (d >= 0) res++;
-		res += calc_vec(Sub[v], d);
+    int kid = 0;
+    int v = s;
+    int res = 0;
+    while (v) {
+        ll d = mx - dis(s, v);
+        if (d >= 0) res++;
+        res += calc_vec(Sub[v], d);
         res -= calc_vec(sub[v][kid], d);
-		kid = par[v].second;
-		v = par[v].first;
-	}
-	return res;
+        kid = par[v].second;
+        v = par[v].first;
+    }
+    return res;
 }
 
 int main() {
