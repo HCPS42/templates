@@ -85,11 +85,11 @@ void check_pragmas() { assert(__builtin_cpu_supports("avx2")); }
 // THE CODE IS ALWAYS SHORT
 
 void Solve() {
-	
+    
 }
 
 int main() {
-	//check_pragmas();
+    //check_pragmas();
     ios_base::sync_with_stdio(0); cin.tie(0);
 #ifdef LOCAL
     freopen("input.txt", "r", stdin);
