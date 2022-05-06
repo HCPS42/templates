@@ -17,16 +17,14 @@ struct seg_tree {
     T t[4 * N];
     T ch[4 * N];
     void build(int v = 1, int l = 0, int r = N - 1) {
-        if (l == r) {
-            t[v] = 0;
-            if constexpr (upd_pol == ADD_EQ) {
-                ch[v] = 0;
-            }
-            else if constexpr (upd_pol == EQ) {
-                ch[v] = ch_def;
-            }
-            return;
+        t[v] = 0;
+        if constexpr (upd_pol == ADD_EQ) {
+            ch[v] = 0;
         }
+        else if constexpr (upd_pol == EQ) {
+            ch[v] = ch_def;
+        }
+        if (l == r) return;
         int m = (l + r) / 2;
         build(v + v, l, m);
         build(v + v + 1, m + 1, r);
