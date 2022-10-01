@@ -75,8 +75,10 @@ void init() {
         g[i] = cur;
     }
     dfs_sz();
+    nxt[1] = 1;
     dfs_hld();
     dfs_lca();
+    par[1] = 0;
 }
 
 int main() {
