@@ -117,14 +117,14 @@ ld circle_union_area(vector<Circle> a) {
     while (a.size() > ptr) a.pop_back();
     ld res = 0;
     vector<Range> ran;
-    for (int i=0; i<a.size(); i++) {
+    for (int i = 0; i < a.size(); i++) {
         ran.clear();
         Point lef = a[i].cen;
         lef.x -= a[i].r;
         int cnt = 0;
         ran.push_back({-pi, 1, lef});
         ran.push_back({pi, -1, lef});
-        for (int j=0; j<a.size(); j++) {
+        for (int j = 0; j < a.size(); j++) {
             if (j == i || a[i].pos(a[j])) continue;
             Line l = a[i].inter(a[j]);
             ld L = (l.b - a[i].cen).ang();
