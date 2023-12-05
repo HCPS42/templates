@@ -73,8 +73,7 @@ void find_dlogs(vector<int> all, int p) {
     precalc(g, p, n);
     for (int i : all) {
         int x = dlog(i, g, p);
-        if (x < 0) x += p - 1;
-        if (x >= p - 1) x -= p - 1;
+        x = ((x % (p - 1)) + p - 1) % (p - 1);
         Dlog[i] = x;
     }
 }
