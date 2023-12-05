@@ -1,8 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-typedef long long ll;
-
 // CHT<ll, MIN, INC> https://atcoder.jp/contests/dp/tasks/dp_z
 // CHT<ll, MIN, RND> https://atcoder.jp/contests/dp/tasks/dp_z
 // CHT<ll, MAX, INC> https://atcoder.jp/contests/dp/tasks/dp_z
@@ -92,6 +90,72 @@ struct CHT {
     }
 };
 
+typedef long long ll;
+
+struct Data {
+    vector<Line<ll>> lines;
+    vector<ll> xs;
+};
+
+mt19937 rnd;
+
+Data gen() {
+    const ll MAX = 1e9;
+    uniform_int_distribution<ll> distr(-MAX, MAX);
+    Data res;
+    int n = rnd() % 100;
+    for (int i = 0; i < n; i++) {
+        res.lines.push_back({distr(rnd), distr(rnd)});
+    }
+    int m = rnd() % 100;
+    for (int i = 0; i < m; i++) {
+        res.xs.push_back(distr(rnd));
+    }
+    return res;
+}
+
+vector<ll> slow(Data d) {
+    vector<ll> res;
+    for (ll x : d.xs) {
+        ll mn = numeric_limits<ll>::max();
+        for (auto& l : d.lines) {
+            mn = min(mn, l.eval(x));
+        }
+        res.push_back(mn);
+    }
+    return res;
+}
+
+template <Pol pol, Ord ord>
+vector<ll> fast(Data d, CHT<ll, pol, ord> cht) {
+    vector<ll> res;
+    for (auto& l : d.lines) {
+        cht.add(l);
+    }
+    cht.build();
+    for (ll x : d.xs) {
+        res.push_back(cht.get(x));
+    }
+    return res;
+}
+
+void stress() {
+    for (int i = 1; i <= 10'000; i++) {
+        auto d = gen();
+        sort(d.xs.begin(), d.xs.end());
+        CHT<ll, MIN, INC> cht;
+        assert(slow(d) == fast(d, cht));
+    }
+    
+    for (int i = 1; i <= 10'000; i++) {
+        auto d = gen();
+        CHT<ll, MIN, RND> cht;
+        assert(slow(d) == fast(d, cht));
+    }
+}
+
 int main() {
+    stress();
     return 0;
 }
+
