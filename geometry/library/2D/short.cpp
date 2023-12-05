@@ -177,7 +177,7 @@ vector<ll> Line<ll>::line_eq_norm() {
     // gcd(a, b, c) = 1
     vector<ll> res = line_eq();
     ll a = res[0], b = res[1], c = res[2];
-    ll gcd = abs(__gcd(a, __gcd(b, c)));
+    ll gcd = abs(__gcd(c, __gcd(a, b)));
     for (auto& i : res) i /= gcd;
     return res;
 }
@@ -289,8 +289,8 @@ vector<P<R>> inter_circle_line(Circle<T> c, Line<T> l) {
     R a = sqrt(max(R(), sq(c.r) - sq(d)));
     P<R> b = l[1] - l[0];
     a /= b.norm();
-    P<R> A = p + b * a;
-    P<R> B = p - b * a;
+    P<R> A = p + a * b;
+    P<R> B = p - a * b;
     if (A == B) return {A};
     return {A, B};
 }
