@@ -398,3 +398,6 @@ Line<T> rad_axis(Circle<T> c1, Circle<T> c2) {
     return {B, C};
 }
 
+int main() {
+    return 0;
+}
