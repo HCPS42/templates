@@ -26,7 +26,7 @@ struct CHT {
         }
     }
     ll get_min(ll x) {
-        while (ptr < K.size() - 1 && K[ptr + 1] * x + B[ptr + 1] < K[ptr] * x + B[ptr]) ptr++;
+        while (ptr + 1 < K.size() && K[ptr + 1] * x + B[ptr + 1] < K[ptr] * x + B[ptr]) ptr++;
         return K[ptr] * x + B[ptr];
     }
 };
