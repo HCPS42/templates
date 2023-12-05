@@ -1,6 +1,7 @@
 #pragma once
 
 #include <bits/stdc++.h>
+#include "2_frac.h"
 using namespace std;
 
 template <class T>
