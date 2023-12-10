@@ -90,6 +90,8 @@ struct CHT {
     }
 };
 
+// STRESS
+
 typedef long long ll;
 
 struct Data {
