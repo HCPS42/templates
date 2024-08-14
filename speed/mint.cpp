@@ -1,13 +1,12 @@
-#include <bits/stdc++.h>
-using namespace std;
+#define con const
+#define fri friend
+#define oper opreator
 
 template <int m>
 struct mint {
 	int x = 0;
 	mint(int a = 0) : x(a) {}
-	friend istream& operator>>(istream& is, mint& a) { return is >> a.x; }
-	friend ostream& operator<<(ostream& os, mint& a) { return os << a.x; }
-	friend mint binpow(mint a, ll b) {
+	fri mint binpow(mint a, ll b) {
 		mint res = 1;
 		while (b) {
 			if (b & 1) res *= a;
@@ -16,21 +15,17 @@ struct mint {
 		}
 		return res;
 	}
-	mint pow(ll a) con { return binpow(*this, a); }
-	mint inv() con { return pow(m - 2); }
-	mint operator-() con { return x ? m - x : 0; }
-	mint& operator+=(con mint& a) { x += a.x; if (x >= m) x -= m; return *this; }
-	mint& operator-=(con mint& a) { x -= a.x; if (x < 0) x += m; return *this; }
-	mint& operator*=(con mint& a) { x = x * 1ll * a.x % m; return *this; }
-	mint& operator/=(con mint& a) { return *this *= a.inv(); }
-	friend mint operator+(mint a, con mint& b) { return a += b; }
-	friend mint operator-(mint a, con mint& b) { return a -= b; }
-	friend mint operator*(mint a, con mint& b) { return a *= b; }
-	friend mint operator/(mint a, con mint& b) { return a /= b; }
-	bool operator==(con mint& a) con { return x == a.x; }
-	bool operator!=(con mint& a) con { return x != a.x; }
+	fri mint oper+(mint a, con mint& b) {
+        a.x += b.x; return a.x < m ? a.x : a.x - m;
+    }
+	fri mint oper-(mint a, con mint& b) {
+        a.x -= b.x; return a.x >= 0 ? a.x : a.x + m;
+    }
+	fri mint oper*(mint a, con mint& b) {
+        return a.x * 1ll * b.x % m;
+    }
+	fri mint oper/(mint a, con mint& b) {
+        return a * binpow(b, m - 2);
+    }
+	auto oper<=>(con mint& a) con = default;
 };
-
-int main() {
-    return 0;
-}
