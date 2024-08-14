@@ -20,64 +20,44 @@
 #include <array>
 #include <stack>
 #include <sstream>
+
 using namespace std;
 typedef long long ll;
-typedef long double ld;
-typedef string str;
-
-#define pb push_back
-#define ppp pop_back
-#define pii pair<int, int>
-#define pll pair<ll, ll>
-#define fi first
-#define se second
-#define stie std::tie
-#define vec vector
-#define forn(i, l, r) for (int i=l; i<=r; i++)
-#define forb(i, r, l) for (int i=r; i>=l; i--)
-#define emp empty
-#define beg begin
-#define ins insert
-#define cle clear
-#define era erase
-#define que queue
-#define pque priority_queue
-#define mset multiset
-#define deq deque
-#define sta stack
-#define con const
-#define rsz resize
-#define ass assign
-#define lowb lower_bound
-#define uppb upper_bound
-#define oper operator
-#define fri friend
-#define tem template
-#define temt tem <class T>
-#define temtv temt void
-
-temtv mini(T& a, T b) { a = min(a, b); }
-temtv maxi(T& a, T b) { a = max(a, b); }
-temt T gcd(T a, T b) { return b == 0 ? a : gcd(b, a % b); }
-tem <class T1, class T2>
-ostream& operator<<(ostream& os, pair<T1, T2> con& a) {
-    return os << "[" << a.fi << ", " << a.se << "]";
+ 
+string to_string(string a) { return '"' + a + '"'; }
+string to_string(char a) { return "'" + string(1, a) + "'"; }
+string to_string(const char* a) { return to_string((string) a); }
+string to_string(bool a) { return a ? "true" : "false"; }
+template <class T1, class T2>
+string to_string(pair<T1, T2> a) {
+    return "(" + to_string(a.first) + ", " + to_string(a.second) + ")";
 }
-tem <class Ch, class Tr, class Container>
-basic_ostream<Ch, Tr>& operator<<(basic_ostream<Ch, Tr>& os, Container con& a) {
-    os << "{ "; for (auto& i : a) os << i << " "; return os << "}";
+template <class T>
+string to_string(T a) {
+    bool first = true; string res = "{";
+    for (const auto& i : a) {
+        if (!first) res += ", ";
+        first = false;
+        res += to_string(i);
+    }
+    res += "}";
+    return res;
 }
-temtv out(T a) { cout << a << endl; }
-tem <class T, class... Args> void out(T a, Args... b) { cout << a << " "; out(b...); }
-temtv out(vec<vec<T>> a) { for (vec<T> i : a) out(i); }
-temtv out_(T a[], int l, int r) { forn(i, l, r) cout << a[i] << " "; cout << endl; }
-void out() { cout << "OK" << endl; }
-temtv sort(vec<T>& a) { sort(a.beg(), a.end()); }
-temtv rever(vec<T>& a) { reverse(a.beg(), a.end()); }
-temtv uniq(vec<T>& a) { sort(a); a.era(unique(a.beg(), a.end()), a.end()); }
+void debug_out() { cerr << endl; }
+template <class T1, class... T2>
+void debug_out(T1 a, T2... b) {
+    cerr << " " << to_string(a);
+    debug_out(b...);
+}
+ 
+#ifdef LOCAL
+#define out(...) cerr << "[" << #__VA_ARGS__ << "]:", debug_out(__VA_ARGS__)
+#else
+#define out(...) 42
+#endif
+
 clock_t start_time; void start_timer() { start_time = clock(); }
-double get_time() { return (double)(clock() - start_time) / CLOCKS_PER_SEC; }
-temt using min_pque = priority_queue<T, vec<T>, greater<T>>;
+double get_time() { return (double) (clock() - start_time) / CLOCKS_PER_SEC; }
 
 void Solve();
 
@@ -88,6 +68,10 @@ int main() {
 #endif
     start_timer();
     Solve();
+#ifdef LOCAL
+    cerr << fixed << setprecision(3);
+    cerr << endl << "Time spent: " << get_time() << endl;
+#endif
     return 0;
 }
 
@@ -97,11 +81,6 @@ int main() {
 // don't overgeneralize
 // don't rush
 
-// 1. Understand the problem
-// 2. Devise a plan
-// 3. Carry out the plan
-// 4. Look back
-
 // don't waste time on standings
 
 // SOLVE THE PROBLEM OR DIE TRYING
@@ -109,5 +88,5 @@ int main() {
 // THE CODE IS ALWAYS SHORT
 
 void Solve() {
-    
+
 }
